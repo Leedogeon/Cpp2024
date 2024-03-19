@@ -26,8 +26,10 @@ void StudentInfo::inputInfo(string _name, int _kor, int _eng, int _math)
 					students[i]->kor = _kor;
 					students[i]->eng = _eng;
 					students[i]->math = _math;
+					cout << "빈공간에 정보가 추가되었습니다. 학생수 : " << allStd + 1 << endl;
+					allStd++;
+					break;
 				}
-
 			}
 		}
 		else
@@ -86,7 +88,9 @@ void StudentInfo::deleteInfo(string _name)
 {
 	for (int i = 0; i < stdCheck; i++)
 	{
-		if (students[i]->name == _name)
+		if (students[i] == nullptr) continue;
+
+		else if (students[i]->name == _name)
 		{
 			cout << students[i]->name << "학생의 정보가 삭제되었습니다." << endl;
 			delete students[i];
