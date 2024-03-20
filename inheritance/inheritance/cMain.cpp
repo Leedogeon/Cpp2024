@@ -1,15 +1,28 @@
 #include<iostream>
 using namespace std;
-class Big
+class Human
 {
-
+public:
+	virtual void A() abstract
+	{
+		cout << "H" << endl;
+	}
 };
-class Small : public Big
+class Player : public::Human
 {
-
+public:
+	void A()
+	{
+		cout << "P" << endl;
+	}
 };
+
+
 int main()
 {
+	Human* a = new Player;
+	Player* b = new Player;
+	b->A();
 
 	return 0;
 }
