@@ -1,24 +1,17 @@
 #include <iostream>
-
+#include "GameManager.h"
 using namespace std;
 
-class A
-{
-public:
-	static int num;
-
-	static void Print()
-	{
-		cout << "Hello World"<<endl;
-	}
-};
 
 int A::num = 0;
 
 int main()
 {
-	A a;
-	a.Print();
-	A::Print();
+	//최초 호출에만 할당
+	GameManager::GetInstance();
+
+	//재활용
+	GameManager::GetInstance();
+
 	return 0;
 }
