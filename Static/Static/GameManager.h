@@ -1,4 +1,6 @@
 #pragma once
+#include<iostream>
+using namespace std;
 class GameManager
 {
 private:
@@ -13,5 +15,11 @@ public:
 
 		return instance;
 	}
+public:
+	void HelloWorld()
+	{
+		cout << "Hello world" << endl;
+	}
 };
+
 
