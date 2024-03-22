@@ -1,13 +1,27 @@
 #include "GameManager.h"
-using namespace std;
+
+class A
+{
+private:
+
+public:
+	static A& Create()
+	{
+		static A a;	// 유일하게 하나만
+		return a;
+
+	}
+
+public:
+	void HelloWorld() { cout << "Hello world" << endl; }
+};
+
+
 
 int main()
 {
-	//최초 호출에만 할당
-	GameManager::GetInstance()->HelloWorld() ;
+	A::Create().HelloWorld();
 
-	//재활용
-	GameManager::GetInstance()->HelloWorld();
-
+	A::Create().HelloWorld();
 	return 0;
 }
