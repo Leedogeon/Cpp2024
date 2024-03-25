@@ -2,34 +2,39 @@
 
 using namespace std;
 
-class Obj
+class Pet
 {
 public:
 	int num;
-public:
-	Obj() { cout << "생성자" << endl; }
-	Obj(int num) { cout << num << " 생성자" << endl; }
-	//Obj& other = a;
-	Obj(Obj& other) { cout << "복사 생성자" << endl; }
-	~Obj() { cout << "소멸자" << endl; }
 };
 
+class Obj
+{
+public:
+	Pet* pet; // int float 
+public:
+	Obj() = default;
+	Obj(const Obj& other)
+	{
+		pet = new Pet;
+		//pet = other.pet;
+		pet->num = other.pet->num;
+	}
+};
 
 int main()
 {
+	Obj a;
+	a.pet = new Pet;
 
-	Obj obj(1);
+	Obj c(a);
+	Obj d = a;
 
-	Obj a;	 //생성자
-	cout << "==============" << endl;
-	a.num = 1;
+	delete a.pet;
 
-	Obj b = a;	//복사 생성자
-	Obj c(a);   //복사 생성자
-
-	cout << &b << endl;
-
-
-	return 0;  //소멸자, 소멸자
+	d.pet->num = 12;
+	//d.pet 
+	//a.pet 
+	return 0;
 }
 
