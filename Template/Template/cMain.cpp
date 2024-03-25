@@ -1,8 +1,8 @@
 #include<iostream>
 using namespace std;
 
-template<typename T>
-T Add(T a, T b)
+template<typename T1, typename T2>
+T2 Add(T1 a, T2 b)
 {
 	return a + b;
 }
@@ -10,7 +10,7 @@ T Add(T a, T b)
 int main()
 {
 	cout << Add(1, 2) << endl;
-	cout << Add(1.1f, 2.2f) << endl;
+	cout << Add(1, 2.2f) << endl;
 
 	return 0;
 }
