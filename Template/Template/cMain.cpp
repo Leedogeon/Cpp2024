@@ -1,29 +1,34 @@
 #include <iostream>
+
 using namespace std;
 
 template <typename T>
-class A
+void A(T a)
+{}
+
+template <typename T> // 포인터 전용
+void B(T* a)
+{}
+
+template <typename T>
+void C(T& a)
 {
-public:
-	T temp;
-public:
-	//A() {}
-	A<T>() {} // default 생성자
-	A<T>(T data)
-	{
-		temp = data;
-	}
-	//~A() {}
-	~A<T>() {}
-};
+}
 
 int main()
 {
+	A(1); // T == int
+	B(new int);// T == int
 
-	A<int> a; // T == int
-	a.temp = 1;
+	int a = 0;
+	A(a);
+	B(&a); // int
 
-	A<float> b(1.1); // T == float
+	C(a); //int& a = a;
+	C(new int); // T == int*  int*& a = new int;
+
+
+	int* t;
 
 	return 0;
 }
