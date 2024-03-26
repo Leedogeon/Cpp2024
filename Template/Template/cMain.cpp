@@ -6,7 +6,7 @@ template <typename T>
 void A(T a)
 {}
 
-template <typename T> // 포인터 전용
+template <typename T>
 void B(T* a)
 {}
 
