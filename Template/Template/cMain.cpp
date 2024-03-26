@@ -1,16 +1,19 @@
 #include<iostream>
 using namespace std;
 
-template<typename T1, typename T2>
-T2 Add(T1 a, T2 b)
+template<typename T>
+struct A
 {
-	return a + b;
-}
+	T temp;
+};
 
 int main()
 {
-	cout << Add(1, 2) << endl;
-	cout << Add(1, 2.2f) << endl;
-
+	A<int> a;
+	a.temp = 1;
+	cout << a.temp << endl;
+	A<float> b;
+	b.temp = 1.1;
+	cout << b.temp << endl;
 	return 0;
 }
