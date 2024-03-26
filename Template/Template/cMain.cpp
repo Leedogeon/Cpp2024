@@ -1,19 +1,29 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 
-template<typename T>
-struct A
+template <typename T>
+class A
 {
+public:
 	T temp;
+public:
+	//A() {}
+	A<T>() {} // default »ı¼ºÀÚ
+	A<T>(T data)
+	{
+		temp = data;
+	}
+	//~A() {}
+	~A<T>() {}
 };
 
 int main()
 {
-	A<int> a;
+
+	A<int> a; // T == int
 	a.temp = 1;
-	cout << a.temp << endl;
-	A<float> b;
-	b.temp = 1.1;
-	cout << b.temp << endl;
+
+	A<float> b(1.1); // T == float
+
 	return 0;
 }
