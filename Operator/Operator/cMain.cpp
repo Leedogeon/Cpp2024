@@ -29,5 +29,6 @@ int main()
 
 	Obj c{ a.x + b.x, a.y + b.y };
 	Obj d = a + b;
+	Obj e = a.operator+(b);
 
 }
