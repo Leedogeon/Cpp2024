@@ -1,29 +1,39 @@
 #include <iostream>
+
 using namespace std;
+
+class Pet
+{};
 
 class Obj
 {
 public:
-	int lv = 1;
+	int key;
 public:
-	Obj& operator ++()
+	bool operator==(const Obj& other)
 	{
-		++lv; return *this;
+		return key == other.key;
 	}
-	Obj& operator ++(int)
-	{
-		lv++; return *this;
-	}
-};
 
+	bool operator!=(const Obj& other)
+	{
+		return key != other.key;
+	}
+
+};
 
 int main()
 {
 	Obj a;
-	a.lv = 1;
+	a.key = 1;
+	Obj b;
+	b.key = 2;
 
-	Obj b = a++;
+	if (a != b)
+	{
+		cout << "a와b는 같지 않음" << endl;
+	}
 
-	cout << b.lv << endl;
+
+	return 0;
 }
-
