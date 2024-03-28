@@ -1,16 +1,24 @@
-#include<iostream>
+#include <iostream>
+
 using namespace std;
+
+class A
+{
+public:
+	void Function(const int& x)
+	{
+	}
+};
+
+// 참조로 전달된 x의 값을 
+//Function 내에서 변경 불가
+void Function(const int& x)
+{
+}
+
 
 int main()
 {
-	char a;
-	//1. 값 변경불가
-	const char c = a;
 
-	//2. 한쪽만 변경 불가
-	const char* c = &a;
-	char* const c = &a;
-
-	//3. 값,주소 변경 불가
-	const char* const c = &a;
+	return 0;
 }
