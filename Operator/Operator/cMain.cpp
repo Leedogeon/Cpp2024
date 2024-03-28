@@ -2,22 +2,21 @@
 
 using namespace std;
 
-class Pet
-{};
-
 class Obj
 {
 public:
-	int key;
+	int a;
+	int b;
 public:
-	bool operator==(const Obj& other)
+	Obj() = default;
+	Obj(const Obj& other)
 	{
-		return key == other.key;
+		cout << "Copy" << endl;
 	}
-
-	bool operator!=(const Obj& other)
+	Obj& operator=(const Obj& other)
 	{
-		return key != other.key;
+		cout << "Operator=" << endl;
+		return *this;
 	}
 
 };
@@ -25,14 +24,13 @@ public:
 int main()
 {
 	Obj a;
-	a.key = 1;
-	Obj b;
-	b.key = 2;
+	a.a = 1;
+	a.b = 2;
 
-	if (a != b)
-	{
-		cout << "a와b는 같지 않음" << endl;
-	}
+	Obj b = a;
+	Obj c;
+	c = a;
+	cout << "c.a : " << c.a << " / c.b : " << c.b << endl;
 
 
 	return 0;
