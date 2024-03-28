@@ -5,16 +5,16 @@ using namespace std;
 class A
 {
 public:
-	void Function(const int& x)
+	//멤버 변수들
+	int a;
+	int b;
+public:
+	//이함수는 클라스의 멤버 변수 변경 불가
+	void Function()	const
 	{
+		//  a=12  << X
 	}
 };
-
-// 참조로 전달된 x의 값을 
-//Function 내에서 변경 불가
-void Function(const int& x)
-{
-}
 
 
 int main()
