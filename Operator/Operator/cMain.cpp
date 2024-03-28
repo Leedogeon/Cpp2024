@@ -7,15 +7,24 @@ public:
 	int x;
 	int y;
 public:
-	Obj operator +(const Obj& other)
-	{
-		Obj obj;
-		obj.x = x + other.x;
-		obj.y = x + other.y;
+	//Obj operator +(const Obj& other)
+	//{
+	//	Obj obj;
+	//	obj.x = x + other.x;
+	//	obj.y = x + other.y;
 
-		return obj;
-	}
+	//	return obj;
+	//}
+	//void operator +(const Obj& other)
+	//{
+	//	cout << "IN" << endl;
+	//}
 };
+
+void operator +(const Obj& a,const Obj & b)
+{
+	cout << "OUT" << endl;
+}
 
 int main()
 {
@@ -28,7 +37,7 @@ int main()
 	b.y = 2;
 
 	Obj c{ a.x + b.x, a.y + b.y };
-	Obj d = a + b;
-	Obj e = a.operator+(b);
 
+	a + b;
 }
+
