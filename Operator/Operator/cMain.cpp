@@ -5,16 +5,19 @@ using namespace std;
 class Obj
 {
 public:
-	int a;
-	int b;
+	int *a;
 public:
 	Obj() = default;
 	Obj(const Obj& other)
 	{
+		a = new int;
+		*a = *other.a;
 		cout << "Copy" << endl;
 	}
 	Obj& operator=(const Obj& other)
 	{
+		a = new int;
+		*a = *other.a;
 		cout << "Operator=" << endl;
 		return *this;
 	}
@@ -24,14 +27,14 @@ public:
 int main()
 {
 	Obj a;
-	a.a = 1;
-	a.b = 2;
+	a.a = new int;
+	*a.a = 12;
 
 	Obj b = a;
 	Obj c;
-	c = a;
-	cout << "c.a : " << c.a << " / c.b : " << c.b << endl;
+	c = b;
+	delete a.a;
 
-
+	cout << a.a  << " , " << b.a << " , " << c.a << endl;
 	return 0;
 }
