@@ -4,40 +4,26 @@ using namespace std;
 class Obj
 {
 public:
-	int x;
-	int y;
+	int lv = 1;
 public:
-	//Obj operator +(const Obj& other)
-	//{
-	//	Obj obj;
-	//	obj.x = x + other.x;
-	//	obj.y = x + other.y;
-
-	//	return obj;
-	//}
-	//void operator +(const Obj& other)
-	//{
-	//	cout << "IN" << endl;
-	//}
+	Obj& operator ++()
+	{
+		++lv; return *this;
+	}
+	Obj& operator ++(int)
+	{
+		lv++; return *this;
+	}
 };
 
-void operator +(const Obj& a,const Obj & b)
-{
-	cout << "OUT" << endl;
-}
 
 int main()
 {
 	Obj a;
-	a.x = 1;
-	a.y = 1;
+	a.lv = 1;
 
-	Obj b;
-	b.x = 2;
-	b.y = 2;
+	Obj b = a++;
 
-	Obj c{ a.x + b.x, a.y + b.y };
-
-	a + b;
+	cout << b.lv << endl;
 }
 
