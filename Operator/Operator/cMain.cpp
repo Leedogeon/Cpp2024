@@ -35,6 +35,6 @@ int main()
 	c = b;
 	delete a.a;
 
-	cout << a.a  << " , " << b.a << " , " << c.a << endl;
+	cout << *a.a  << " , " << *b.a << " , " << *c.a << endl;
 	return 0;
 }
