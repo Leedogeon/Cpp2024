@@ -6,11 +6,7 @@ void A()
 }
 int main()
 {
-	void(*p)();
-	p = A;
-
-	A();
-	p();
-
+	void* p = A;
+	(*(void(*)())p)();
 	return 0;
 }
