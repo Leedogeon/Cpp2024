@@ -1,21 +1,29 @@
 #include <iostream>
+
 using namespace std;
 
-void Call(void(*p)())
+template<typename T>
+T Add(T a, T b) { return a + b; }
+template<typename T>
+T Sub(T a, T b) { return a - b; }
+template<typename T>
+T Mul(T a, T b) { return a * b; }
+template<typename T>
+T Div(T a, T b) { return a / b; }
+
+template<typename T>
+T Calculator(T(*p)(T, T), T valueA, T valueB)
 {
-	p();
+	return p(valueA, valueB);
 }
-void A()
-{
-	cout << "A" << endl;
-}
-void B()
-{
-	cout << "B" << endl;
-}
+
+
 int main()
 {
-	Call(A);
-	Call(B);
+	cout << Calculator(Add, 1.1, 2.2) << endl;
+	cout << Calculator(Sub, 1, 2) << endl;
+	cout << Calculator(Mul, 1.1, 2.2) << endl;
+	cout << Calculator(Div, 1, 2) << endl;
+
 	return 0;
 }
