@@ -3,22 +3,37 @@
 
 using namespace std;
 
-using P = void(*)(int, int);
-
 void A()
 {
 	cout << "A" << endl;
 }
 
+void B()
+{
+	cout << "B" << endl;
+}
+
+//함수 포인터
+function<void()> callback;
+
+void Register(function<void()> _callback)
+{
+	callback = _callback;
+}
+
+void Call()
+{
+	callback();
+}
+
 int main()
 {
-	function<void()> a;
-	function<void(void)> b;
+	Register(A);
+	Call();
 
-	a = A;
-	b = A;
+	Register(B);
+	Call();
 
-	a();
 
 	return 0;
 }
