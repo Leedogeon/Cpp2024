@@ -1,12 +1,21 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
+
+void Call(void(*p)())
+{
+	p();
+}
 void A()
 {
-	cout << "Hello World" << endl;
+	cout << "A" << endl;
+}
+void B()
+{
+	cout << "B" << endl;
 }
 int main()
 {
-	void* p = A;
-	(*(void(*)())p)();
+	Call(A);
+	Call(B);
 	return 0;
 }
