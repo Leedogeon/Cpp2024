@@ -1,21 +1,24 @@
 #include <iostream>
+#include <functional>// 호출
 
 using namespace std;
 
-//typedef 함수반환형(*함수포인터 자료형 이름)(함수 매개변수 데이터 타입들);
-//typedef int(*Func)(int, int);
+using P = void(*)(int, int);
 
-int Add(int a, int b) { return a + b; }
-
-//C++
-//using 타입정의 = 정의;
-using Func = int(*)(int, int);
+void A()
+{
+	cout << "A" << endl;
+}
 
 int main()
 {
-	Func a = NULL;
-	a = Add;
-	cout << a(1, 2) << endl;
+	function<void()> a;
+	function<void(void)> b;
+
+	a = A;
+	b = A;
+
+	a();
 
 	return 0;
 }
