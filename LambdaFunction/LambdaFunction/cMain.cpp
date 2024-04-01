@@ -1,27 +1,42 @@
 #include <iostream>
+#include <functional>
+
 using namespace std;
 
-int(*p)(int, int);
+//2
+typedef int(*TypeP)(int, int);
 
-void Register(int(*_p)(int, int))
-{
-	p = _p;
-}
-
-int Call(int a, int b)
-{
-	return	p(a, b);
-}
+//3	 c++11
+using UsingP = int(*)(int, int);
 
 
 int main()
 {
-	Register([](int a, int b) {return a + b; });
-	cout << "=====================" << endl;
-	cout << Call(1, 1) << endl;
+	//1
+	int(*p)(int, int);
+	p = [](int a, int b) {return a + b; };
 
-	Register([](int a, int b) {return a - b; });
-	cout << Call(1, 1) << endl;
+	//2
+	TypeP typeP = [](int a, int b) {return a + b; };
+
+	//3
+	UsingP usingP = [](int a, int b) {return a + b; };
+
+	//4
+	std::function<int(int, int)> funcP = [](int a, int b) {return a + b; };
+
+	auto a = 3; // auto -> int
+	auto b = 1.1f; //auto -> float
+
+	//5 
+	auto autoP = [](int a, int b) {return a + b; };
+
+	cout << p(1, 2) << endl;
+	cout << typeP(1, 2) << endl;
+	cout << usingP(1, 2) << endl;
+	cout << funcP(1, 2) << endl;
+	cout << autoP(1, 2) << endl;
+
 	return 0;
 }
 
