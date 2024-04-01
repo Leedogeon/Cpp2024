@@ -3,37 +3,33 @@
 
 using namespace std;
 
-void A()
+
+
+bool A(int a, int b)
 {
 	cout << "A" << endl;
+	return true;
 }
 
-void B()
+bool B(int a, int b)
 {
 	cout << "B" << endl;
+	return false;
 }
 
-//함수 포인터
-function<void()> callback;
-
-void Register(function<void()> _callback)
-{
-	callback = _callback;
-}
-
-void Call()
-{
-	callback();
-}
+using Func = function<bool(int, int)>;
+//function<bool(int, int)> funcs[2];
+Func funcs[2];
 
 int main()
 {
-	Register(A);
-	Call();
+	funcs[0] = A;
+	funcs[1] = B;
 
-	Register(B);
-	Call();
-
+	for (int i = 0; i < 2; i++)
+	{
+		funcs[i](1, 1);
+	}
 
 	return 0;
 }
