@@ -1,7 +1,7 @@
 #include <iostream>
 using namespace std;
 
-using P = void(*)();
+using P = int(*)();
 void A()
 {
 	cout << "Test" << endl;
@@ -10,6 +10,6 @@ void A()
 int main()
 {
 	P p;
-	p = []() {cout << "TEST" << endl; };
+	p = []() -> int {cout << "TEST" << endl; return 0; };
 	p();
 }
