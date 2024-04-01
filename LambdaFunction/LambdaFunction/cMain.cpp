@@ -1,15 +1,27 @@
 #include <iostream>
 using namespace std;
 
-using P = int(*)();
-void A()
+int(*p)(int, int);
+
+void Register(int(*_p)(int, int))
 {
-	cout << "Test" << endl;
+	p = _p;
 }
+
+int Call(int a, int b)
+{
+	return	p(a, b);
+}
+
 
 int main()
 {
-	P p;
-	p = []() -> int {cout << "TEST" << endl; return 0; };
-	p();
+	Register([](int a, int b) {return a + b; });
+	cout << "=====================" << endl;
+	cout << Call(1, 1) << endl;
+
+	Register([](int a, int b) {return a - b; });
+	cout << Call(1, 1) << endl;
+	return 0;
 }
+
