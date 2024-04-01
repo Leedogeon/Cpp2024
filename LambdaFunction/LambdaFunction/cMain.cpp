@@ -1,19 +1,12 @@
 #include <iostream>
 using namespace std;
 
-void A()
-{
-	cout << "Test" << endl;
-}
-
 int main()
 {
-	int res = 0;
-	A();
-	res = [](int a, int b)
-		{
-			cout << "Lambda" << endl;
-			return a+b;
-		}(1,2);
-	cout << res << endl;
+	int numA = 1;
+	int numB = 2;
+
+	//새로 할당된 numA와 numB 는 람다에 속함
+	//int numA = numA(1); 복사해서 값을 넣어줌
+	[numA, numB]() {cout << numA << ", "  << numB << endl; }();
 }
