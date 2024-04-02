@@ -2,43 +2,33 @@
 
 using namespace std;
 
-class Obj
+//왼값 참조
+void Value(int& num)
 {
-public:
-	int num = 0;
-public:
-	//1.
-	Obj() { cout << "생성자" << endl; }
-	//2.
-	Obj(Obj& other) noexcept { cout << "왼값 참조 복사 생성자" << endl; }
-	Obj(Obj&& other) noexcept { num = other.num; cout << "이동 복사 생성자 호출" << endl; }
-public:
-	//3.
-	//this == 할당된 내 클라스의 주소
-	Obj& operator=(Obj&& other)noexcept { cout << "오른값 참조 대입 operator" << endl; return *this; }
-};
+	cout << "왼값 참조 : " << num << endl;
+}
 
+//오른값 참조
+void Value(int&& num)
+{
+	cout << "오른값 참조 : " << num << endl;
+}
+
+//보편 참조
+//T&& T 왼값 -> 왼값 / T 오른값 -> 오른값
+template<typename T> // template인데 &&
+void Forwarder(T&& arg) // 오른값 참조 아님
+{
+	Value(std::forward<T>(arg)); //인자의 원래 값 카테고리를 유지하며 전달
+}
 
 int main()
 {
-	//1.
-	Obj a;
+	int a = 5;
 
-	a.num = 1;
+	Forwarder(a); // a는 lvalue, T&& left value 대응
 
-	cout << "===============" << endl;
-
-	//이동 생성자 호출
-	//std::move() a를 오른값 참조로 바꿈
-	Obj b = std::move(a);
-
-	Obj c;
-	//3. 이동 대입 연산자
-	c = std::move(b);
-
-	cout << a.num << endl;
-	cout << b.num << endl;
-	cout << c.num << endl;
+	Forwarder(5); // 5는 rvalue, T&& right value 대응
 
 	return 0;
 }
