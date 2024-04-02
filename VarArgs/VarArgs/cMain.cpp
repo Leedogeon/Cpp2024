@@ -2,11 +2,17 @@
 
 using namespace std;
 
-//C++ 11 부터
-template<typename... Args>
-void Print(Args... args)
+void Print()
 {
-	cout << "Args..." << endl;
+	cout << "Finished!" << endl;
+}
+
+//C++ 11 부터
+template<typename T, typename... Args>
+void Print(T first, Args... args)
+{
+	cout << first << " / ";
+	Print(args...);
 }
 
 
