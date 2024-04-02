@@ -1,10 +1,13 @@
 #include<iostream>
 using namespace std;
 
-class Obj
-{};
+static void Test(int&& num)
+{
+	cout << num << endl;
+	num = 12;
+	cout << num << endl;
+}
 int main()
 {
-	Obj(); // << ÀÓ½Ã°´Ã¼
-	return 0;
+	Test(5);
 }
