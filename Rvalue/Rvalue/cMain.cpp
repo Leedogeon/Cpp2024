@@ -1,13 +1,26 @@
-#include<iostream>
+#include <iostream>
 using namespace std;
 
-static void Test(int&& num)
+
+struct Obj
 {
-	cout << num << endl;
-	num = 12;
-	cout << num << endl;
+	int x;
+	int y;
+};
+
+
+static void Test(Obj&& obj)
+{
+	obj.x = 1;
+	obj.y = 2;
+	cout << "오른값 참조 : x " << obj.x << " / y : " << obj.y << endl;
+
 }
+
 int main()
 {
-	Test(5);
+	Obj a;
+	Test(Obj());
+
+	return 0;
 }
