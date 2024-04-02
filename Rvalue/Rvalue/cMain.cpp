@@ -1,11 +1,13 @@
 #include <iostream>
 using namespace std;
 
-
 struct Obj
 {
 	int x;
 	int y;
+
+	Obj() = default;	   //x = _x;
+	Obj(int _x, int _y) : x(_x), y(_y) {}
 };
 
 
@@ -20,7 +22,7 @@ static void Test(Obj&& obj)
 int main()
 {
 	Obj a;
-	Test(Obj());
+	Test(Obj(1, 2));
 
 	return 0;
 }
