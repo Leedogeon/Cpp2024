@@ -1,10 +1,10 @@
 #include<iostream>
 using namespace std;
 
+class Obj
+{};
 int main()
 {
-	// x; <= 왼값 Lvalue
-	int x = 5;
-	// 5 << 오른값 Rvalue : 임시값
+	Obj(); // << 임시객체
 	return 0;
 }
