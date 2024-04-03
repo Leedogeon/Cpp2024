@@ -3,20 +3,14 @@
 #include <atomic>
 using namespace std;
 
-struct MyStruct
-{
-	char a;
-	char b;
-	char c;
-
-};
-
-atomic<MyStruct> myStruct;
+atomic<int> num;
 
 
 int main()
 {
-	cout << "lock free? : " << myStruct.is_lock_free()<< endl;
+	num.store(0);
+	int value = num.load();
 
+	cout << value << endl;
 	return 0;
 }
