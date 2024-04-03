@@ -1,20 +1,29 @@
-#include<iostream>
-#include<thread>
+#include <iostream>
+#include <thread>	
+
 using namespace std;
 
-void ThreadFunc(int index)
+void ThreadFunc()
 {
-	cout << "tread " << index << endl;
+	cout << "Hello Thread" << endl;
+	while (true)
+	{
+
+	}
 }
 
 int main()
 {
-	thread t(ThreadFunc, 1);
-	thread t2;
-	t2 = thread(ThreadFunc, 2);
-	cout << "main" << endl;
+	std::thread t(ThreadFunc);
 
-	t.join();//thread 종료
-	t2.join();
+	cout << "Main" << endl;
+
+	//t 스레드가 joinable 상태인 경우 == t.join()함수를 호출 할수 있는 경우
+	if (t.joinable())
+	{
+		//t 스레드가 실행이 끝날때 까지 대기
+		t.join();
+	}
+
 	return 0;
 }
