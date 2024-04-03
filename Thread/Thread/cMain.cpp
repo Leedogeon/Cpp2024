@@ -14,9 +14,11 @@ int main()
 	//값이 같아서 바꿧으면 true 아니면 false
 	bool res = num.compare_exchange_weak(expected,desired);
 	cout << res << endl;
-	res = num.compare_exchange_weak(expected, desired);
-	cout << res << endl;
+	//res = num.compare_exchange_weak(expected, desired);
+	//cout << res << endl;
 
-	//num.compare_exchange_strong(desired,expected);
+	//값이 바뀔때까지 반복
+	res =num.compare_exchange_strong(desired,expected);
+	cout << res << endl;
 	return 0;
 }
