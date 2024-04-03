@@ -1,29 +1,38 @@
 #include <iostream>
 #include <thread>	
-
 using namespace std;
 
-void ThreadFunc()
-{
-	cout << "Hello Thread" << endl;
-	while (true)
-	{
+int res = 0;
 
+void Add()
+{
+	for (int i = 0; i < 100000; i++)
+	{
+		res++;
+		//temp = res;
+		//temp = temp+1;
+		//res = temp;
 	}
 }
-
+void Sub()
+{
+	for (int i = 0; i < 100000; i++)
+	{
+		res--;
+		//temp = res;
+		//temp = temp-1;
+		//res = temp;
+	}
+}
 int main()
 {
-	std::thread t(ThreadFunc);
+	thread t1(Add);
+	thread t2(Sub);
 
-	cout << "Main" << endl;
+	t1.join();
+	t2.join();
 
-	//t 스레드가 joinable 상태인 경우 == t.join()함수를 호출 할수 있는 경우
-	if (t.joinable())
-	{
-		//t 스레드가 실행이 끝날때 까지 대기
-		t.join();
-	}
+	cout << res << endl; //==> t1,t2동시 실행으로 문제생길수있음
 
 	return 0;
 }
