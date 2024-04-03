@@ -1,17 +1,16 @@
 #include <iostream>
 #include <thread>	
+#include <atomic>
 using namespace std;
 
-int res = 0;
+//res에 대한 동시접근이 원자적으로 차단
+atomic<int> res = 0;
 
 void Add()
 {
 	for (int i = 0; i < 100000; i++)
 	{
 		res++;
-		//temp = res;
-		//temp = temp+1;
-		//res = temp;
 	}
 }
 void Sub()
@@ -19,9 +18,6 @@ void Sub()
 	for (int i = 0; i < 100000; i++)
 	{
 		res--;
-		//temp = res;
-		//temp = temp-1;
-		//res = temp;
 	}
 }
 int main()
@@ -32,7 +28,7 @@ int main()
 	t1.join();
 	t2.join();
 
-	cout << res << endl; //==> t1,t2동시 실행으로 문제생길수있음
+	cout << res << endl;
 
 	return 0;
 }
