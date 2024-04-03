@@ -8,7 +8,7 @@ struct MyStruct
 	char a;
 	char b;
 	char c;
-	char d;
+
 };
 
 atomic<MyStruct> myStruct;
