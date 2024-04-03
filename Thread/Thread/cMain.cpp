@@ -3,14 +3,20 @@
 #include <atomic>
 using namespace std;
 
-atomic<int> num;
-
+atomic<int> num = 0;
 
 int main()
 {
-	num.store(0);
-	int value = num.load();
+	int expected = 0; //예상되는 값
+	int desired = 1; //원하는 값
 
-	cout << value << endl;
+	//num == expected -> num = desired;
+	//값이 같아서 바꿧으면 true 아니면 false
+	bool res = num.compare_exchange_weak(expected,desired);
+	cout << res << endl;
+	res = num.compare_exchange_weak(expected, desired);
+	cout << res << endl;
+
+	//num.compare_exchange_strong(desired,expected);
 	return 0;
 }
