@@ -7,31 +7,14 @@ using namespace std;
 vector<int> numbers;;
 mutex mtx;
 
-//lockguard 구현
-template<typename T>
-class LockGuard
-{
-private:
-	T* mutx;
-public:
-	LockGuard(T& m)
-	{
-		mutx = &m;
-		mutx->lock();
-	}
-	~LockGuard()
-	{
-		mutx->unlock();
-	}
-};
-
 void Push()
 {
 	for (int i = 0; i < 10000; i++)
 	{
 		//mtx.lock();
-		//LockGuard<mutex> lock(mtx);
-		lock_guard<mutex> lock(mtx);
+		unique_lock<mutex> lock(mtx, defer_lock); // 나중에 lock 하도록 설정
+		lock.lock();//수동 잠금
+
 		// 내 스레드가 건드리고 있으면 스레드가 못건드림
 		numbers.push_back(1);
 	}
