@@ -2,32 +2,58 @@
 #include <thread>
 #include <vector>
 #include <mutex>
+#include <shared_mutex>
 using namespace std;
 
-vector<int> numbers;;
-mutex mtx;
+vector<int> numbers;
 
-void Push()
+shared_mutex rwLock;
+
+
+void ReadFunction(int id)
 {
-	for (int i = 0; i < 10000; i++)
-	{
-		//mtx.lock();
-		unique_lock<mutex> lock(mtx, defer_lock); // 나중에 lock 하도록 설정
-		lock.lock();//수동 잠금
+	//읽기전용 - 모든 접근 허용
+	//unique_lock 작동시 대기
+	shared_lock<shared_mutex> lock(rwLock);
+	cout << "Redaer : " << id << "is reading\n";
+ }
 
-		// 내 스레드가 건드리고 있으면 스레드가 못건드림
-		numbers.push_back(1);
-	}
+void WriteFunction(int id)
+{
+	//쓰기전용 - 유일성 보장
+	//shared_lock 작동시 대기했다가 씀
+	unique_lock<shared_mutex> lock(rwLock);
+	cout << "Writer : " << id << "is writing\n";
 }
+
 
 int main()
 {
-	thread t1(Push);
-	thread t2(Push);
+	thread readers[5];
+	thread writers[2];
 
-	t1.join();
-	t2.join();
+	for (int i = 0; i < 5; i++)
+	{
+		readers[i] = thread(ReadFunction, i);
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		writers[i] = thread(WriteFunction, i);
+	}
 
-	cout << numbers.size() << endl;
+	for (int i = 0; i < 5; i++)
+	{
+		if (readers[i].joinable())
+		{
+			readers[i].join();
+		}
+	}
+	for (int i = 0; i < 2; i++)
+	{
+		if (writers[i].joinable())
+		{
+			writers[i].join();
+		}
+	}
 	return 0;
 }
