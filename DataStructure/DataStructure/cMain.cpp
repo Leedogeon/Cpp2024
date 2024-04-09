@@ -10,7 +10,7 @@ int main()
 	{
 		system("cls");
 		int num = 0;
-		int num2 = 0;
+		int data = 0;
 		cout << "1.입력, 2.제거 3.count확인, 4.공간확인, 5.정보확인 ,6.초기화" << endl;
 		cout << "입력 : ";
 		cin >> num;
@@ -18,8 +18,8 @@ int main()
 		switch (num)
 		{
 		case 1: cout << "정보 입력 : ";
-			cin >> num2;
-			stk.Push(num2);
+			cin >> data;
+			stk.Push(data);
 			break;
 		case 2: stk.Pop();
 			break;
