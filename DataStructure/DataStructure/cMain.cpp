@@ -4,14 +4,15 @@ using namespace std;
 
 int main()
 {	
+
 	Stack stk;
-	stk.Clear();
+	
 	while (true)
 	{
 		system("cls");
 		int num = 0;
 		int data = 0;
-		cout << "1.입력, 2.제거 3.count확인, 4.공간확인, 5.정보확인 ,6.초기화" << endl;
+		cout << "1.입력, 2.제거 3.count확인, 4.정보확인 ,5.초기화" << endl;
 		cout << "입력 : ";
 		cin >> num;
 
@@ -24,12 +25,10 @@ int main()
 		case 2: stk.Pop();
 			break;
 		case 3: stk.Count();
+			break; 
+		case 4: stk.Check();
 			break;
-		case 4: stk.IsEmpty();
-			break;
-		case 5: stk.Check();
-			break;
-		case 6: stk.Clear();
+		case 5: stk.Clear();
 		default:
 			break;
 		}

@@ -2,53 +2,49 @@
 
 void Stack::Clear()
 {
-    for (int i = 0; i < MaxCount; i++)
+    if (!IsEmpty())
     {
-        data[i] = 0;
+        delete data;
+        data = nullptr;
+        count = 0;
     }
-    count = 0;
-    cout << "Stack 초기화, count : " << count << endl;
 }
 
-int Stack::Count()
+void Stack::Count()
 {
-    count = 0;
-    for (int i = 0; i < MaxCount; i++)
-    {
-        if (data[i] != 0) count++;
-    }
     cout << "count : " << count << endl;
-    return count;
 }
 
 bool Stack::IsEmpty()
 {
-    if (count == MaxCount)
+    if (count == 0)
     {
-        cout << "가득참" << endl;
-        return false;
-    }
-
-    else
-    {
-        cout << "비어있음" << endl; return true;
-    }
-}
-
-bool Stack::Push(int _data)
-{
-    if (count != MaxCount)
-    {
-        data[count] = _data;
-        count++;
-        cout << _data << " 입력 완료" << endl;
         return true;
     }
+    else return false;
+}
+
+void Stack::Push(int _data)
+{
+    if (IsEmpty())
+    {
+        data = new int;
+        data[0] = _data;
+        cout << _data << " 입력성공" << endl;
+    }
     else
     {
-        cout << _data << " 입력 실패" << endl;
-        return false;
+        int* nData = new int[count + 1];
+        for (int i = 0; i < sizeof(data) / 4; i++)
+        {
+            nData[i] = data[i];
+        }
+        nData[count] = _data;
+        delete data;
+        data = nData;
+        cout << _data << " 입력성공" << endl;
     }
+    count++;
    
 }
 
@@ -56,31 +52,47 @@ int Stack::Pop()
 {
     if (count != 0)
     {
-        
-        int temp = 0;
-        temp = data[count-1];
-        data[count -1] = 0;
+        cout << data[count-1] << "제거" << endl;
+        int* nData = new int[count - 1];
+        for (int i = 0; i < (sizeof(data) / 4)-1; i++)
+        {
+            nData[i] = data[i];
+        }
+        delete data;
+        data = nData;
         count--;
-        cout << temp << " Pop 성공" << endl;
-        return temp;
     }
-    else
-    {
-        cout << "Pop 실패";
-        return 0;
-    }
+    
+    return 0;
 }
 
 int Stack::Check()
 {
-    for (int i = 0; i < MaxCount; i++)
+    if (!IsEmpty())
     {
-        cout << "data[" << i <<"] : " << data[i] << endl;
+        for (int i = 0; i < count; i++)
+        {
+            cout << "data[" << i << "] = " << data[i] << endl;
+        }
     }
+    
     return 0;
+
 }
 
 Stack::Stack()
 {
-    cout << "생성자" << endl;
+    data = nullptr;
+    count = 0;
+}
+
+Stack::~Stack()
+{
+    if (data != nullptr)
+    {
+        delete data;
+        data = nullptr;
+    }
+
+    count = 0;
 }
