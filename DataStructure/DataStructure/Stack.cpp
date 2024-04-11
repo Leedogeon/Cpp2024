@@ -50,15 +50,15 @@ int Stack::Pop()
 {
     if (count != 0)
     {
-        cout << data[count-1] << "제거" << endl;
-        int* nData = new int[count - 1];
-        for (int i = 0; i < count-1; i++)
+        count--;
+        cout << data[count] << " 제거" << endl;
+        int* nData = new int[count];
+        for (int i = 0; i < count; i++)
         {
             nData[i] = data[i];
         }
         delete data;
         data = nData;
-        count--;
     }
     
     return 0;
