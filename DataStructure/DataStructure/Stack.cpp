@@ -26,14 +26,7 @@ bool Stack::IsEmpty()
 
 void Stack::Push(int _data)
 {
-    if (IsEmpty())
-    {
-        data = new int;
-        data[0] = _data;
-        cout << _data << " 입력성공" << endl;
-    }
-    else
-    {
+    
         int* nData = new int[count + 1];
 
         for (int i = 0; i < count; i++)
@@ -42,10 +35,13 @@ void Stack::Push(int _data)
             nData[i] = data[i];
         }
         nData[count] = _data;
-        delete data;
+        if (!IsEmpty())
+        {
+            delete data;
+        }        
         data = nData;
         cout << _data << " 입력성공" << endl;
-    }
+   
     count++;
    
 }
