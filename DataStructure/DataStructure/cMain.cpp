@@ -29,6 +29,7 @@ int main()
 		case 4: stk.Check();
 			break;
 		case 5: stk.Clear();
+			break;
 		default:
 			break;
 		}
