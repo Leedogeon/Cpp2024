@@ -35,8 +35,10 @@ void Stack::Push(int _data)
     else
     {
         int* nData = new int[count + 1];
-        for (int i = 0; i < sizeof(data) / 4; i++)
+
+        for (int i = 0; i < count; i++)
         {
+            
             nData[i] = data[i];
         }
         nData[count] = _data;
@@ -54,7 +56,7 @@ int Stack::Pop()
     {
         cout << data[count-1] << "Á¦°Å" << endl;
         int* nData = new int[count - 1];
-        for (int i = 0; i < (sizeof(data) / 4)-1; i++)
+        for (int i = 0; i < count-1; i++)
         {
             nData[i] = data[i];
         }
