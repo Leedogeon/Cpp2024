@@ -21,14 +21,9 @@ bool Deque::IsEmpty()
     else return false;
 }
 
-void Deque::Enqueue(int _data)
+void Deque::Enqueue(int _data, int _sel)
 {
-    if (IsEmpty())
-    {
-        data = new int;
-        data[0] = _data;
-    }
-    else
+    if (_sel == 2)
     {
         int* nData = new int[count + 1];
         for (int i = 0; i < count; i++)
@@ -36,10 +31,31 @@ void Deque::Enqueue(int _data)
             nData[i] = data[i];
         }
         nData[count] = _data;
-        delete data;
+
+        if (!IsEmpty())
+        {
+            delete data;
+        }
+        data = nData;
+        cout << _data << " 입력" << endl;
+    }    
+    else
+    {
+        int* nData = new int[count + 1];
+        nData[0] = _data;
+        for (int i = 0; i < count; i++)
+        {
+            nData[i+1] = data[i];
+        }
+        if (!IsEmpty())
+        {
+            delete data;
+        }
         data = nData;
         cout << _data << " 입력" << endl;
     }
+        
+    
     count++;
 }
 

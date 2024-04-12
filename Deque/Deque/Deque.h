@@ -12,7 +12,7 @@ public:
 	void Clear();
 	int Count();
 	bool IsEmpty();
-	void Enqueue(int _data);
+	void Enqueue(int _data, int _sel);
 	int Dequeue(int _num);
 	void Check();
 public:

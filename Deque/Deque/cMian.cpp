@@ -9,6 +9,7 @@ int main()
 		system("cls");
 		int num = 0;
 		int data = 0;
+		int sel = 0;
 		cout << "1.입력, 2.제거 3.count확인 4.정보확인 ,5.초기화" << endl;
 		cout << "입력 : ";
 		cin >> num;
@@ -17,12 +18,15 @@ int main()
 		{
 		case 1: cout << "정보 입력 : ";
 			cin >> data;
-			que.Enqueue(data);
+			cout << "1. 앞에 추가, 2. 뒤에추가 : ";
+			cin >> sel;
+			if (sel != 1 && sel != 2) break;
+			que.Enqueue(data,sel);
 			break;
 		case 2: cout << "1. 앞부터 제거 , 2. 뒤부터 제거 : ";
-			cin >> data;
-			if (data != 1 && data != 2) break;
-			else que.Dequeue(data);
+			cin >> sel;
+			if (sel != 1 && sel != 2) break;
+			else que.Dequeue(sel);
 			break;
 		case 3: que.Count();
 			break;
