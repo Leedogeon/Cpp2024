@@ -113,12 +113,8 @@ void ArrayList::DeleteNodeData(int _data)
 
 void ArrayList::DeleteIndex(int _index)
 {
-	if ((count-1) < _index)
-	{
-		return;
-	}
-	else
-	{
+	if ((count - 1) < _index) return;
+	
 		int chk = 0;
 		count--;
 		int* nData = new int[count];
@@ -134,7 +130,7 @@ void ArrayList::DeleteIndex(int _index)
 		} 
 		delete data;
 		data = nData;
-	}
+	
 
 }
 
