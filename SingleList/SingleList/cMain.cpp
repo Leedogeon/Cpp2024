@@ -7,13 +7,17 @@ int main()
 	sin.AddNode(30);
 	sin.AddNode(40);
 	sin.InsertNode(0, 50);
+	sin.PrintAll();
+
+	cout << "///////" << endl;
+	sin.DeleteIndex(4);
 	
+	sin.PrintAll();
 	//cout << sin.head->data << endl;
 	//cout << sin.head->next->data << endl;
 	//cout << sin.head->next->next->data << endl;
 	//cout << sin.head->next->next->next->data << endl;
 	//cout << sin.head->next->next->next->next->data << endl;
 
-	sin.DeleteNodeData(10);
 
 }

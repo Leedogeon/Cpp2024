@@ -19,88 +19,109 @@ void SingleList::AddNode(int _data)
 
 void SingleList::InsertNode(int _index, int _data)
 {
-	if (_index > count) return;
+	if (_index < 0 || _index > count || count == 0) return;
 
 	Node* nNode = new Node;
 	nNode->data = _data;
-	Node* Prev = new Node;
-	Prev = head;
-	for (int i = 0; i < _index; i++)
+	nNode->next = nullptr;
+
+	if (_index == 0)
 	{
-		Prev = Prev->next;
+		nNode->next = head;
+		head = nNode;
+		if (curNode == nullptr) curNode = head;
 	}
-	nNode->next = Prev->next;
-	Prev->next = nNode;
-
-
-	if (nNode->next == nullptr)
+	else
 	{
-		curNode = nNode;
+		Node* prev = head;
+		for (int i = 1; i < _index; i++)
+		{
+			prev = prev->next;
+		}
+
+		nNode->next = prev->next;
+		prev->next = nNode;
+
+		if (nNode->next == nullptr) curNode = nNode;
 	}
 	count++;
 }
 
 void SingleList::UpdateNode(int _index, int _data)
 {
-	if (_index > count) return;
+	if (_index < 0 || _index >= count) return;
 
-	Node* nNode = new Node;
-	nNode->data = _data;
-	Node* Prev = new Node;
-	Prev = head;
+	Node* cur = head;
 	for (int i = 0; i < _index; i++)
 	{
-		Prev = Prev->next;
+		cur = cur->next;
 	}
-	Prev->data = nNode->data;
+	cur->data = _data;
 
 }
 
 void SingleList::DeleteNodeData(int _data)
 {
-	Node* nNode = new Node;
-	nNode = head;
-	for (int i = 0; i < count; i++)
+	Node* cur = head;
+	Node* prev = new Node;
+
+	while (cur != nullptr)
 	{
-		if (nNode->data = _data)
+		if (cur->data == _data)
 		{
-			if (nNode == head)
+			if (prev == nullptr)
 			{
-				/*if (head->next == nullptr)
-				{
-					delete nNode;
-				}*/
-				head = head->next;
+				head = cur->next;
+				if (head == nullptr) curNode = nullptr;
 			}
 			else
 			{
-				Node* Next = new Node;
-				Next = nNode->next;
-				if (Next->next == nullptr)
-				{
-					nNode->next = nullptr;
-				}
-				else
-				{
-					
-					nNode->next = Next;
-				}
-				
-				break;
+				prev->next = cur->next;
+				if (prev->next == nullptr) curNode = prev;
 			}
-			
-		}
-		else nNode = nNode->next;
-	}
 
+			delete cur;
+			count--;
+			return;
+		}
+
+		prev = cur;
+		cur = cur->next;
+	}
 }
 
 void SingleList::DeleteIndex(int _index)
 {
+	if (_index < 0 || _index > count) return;
+
+	Node* cur = head;
+	Node* prev = new Node;
+
+	if (_index == 0)
+	{
+		head = cur->next;
+		if (head == nullptr) curNode = nullptr;
+		count--;
+		return;
+	}
+	else
+	{
+		for (int i = 0; i < _index; i++)
+		{
+			prev = cur;
+			cur = cur->next;
+		}
+		prev->next = cur->next;
+		if (prev->next == nullptr) curNode = prev;
+		delete cur;
+		count--;
+	}
+	
 }
 
 void SingleList::ClearAllNode()
 {
+
 }
 
 int SingleList::GetNodeData(int _index)
@@ -110,16 +131,27 @@ int SingleList::GetNodeData(int _index)
 
 int SingleList::GetListSize()
 {
-	return 0;
+	return count;
 }
 
 bool SingleList::IsEmpty()
 {
+	if (count == 0 || head == nullptr)
+	{
+		return true;
+	}
 	return false;
 }
 
 void SingleList::PrintAll()
 {
+	Node* nNode = new Node;
+	nNode = head;
+	for (int i = 0; i < count; i++)
+	{
+		cout << nNode->data << endl;
+		nNode = nNode->next;
+	}
 }
 
 SingleList::SingleList()
