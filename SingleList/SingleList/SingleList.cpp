@@ -63,7 +63,7 @@ void SingleList::UpdateNode(int _index, int _data)
 void SingleList::DeleteNodeData(int _data)
 {
 	Node* cur = head;
-	Node* prev = new Node;
+	Node* prev = nullptr;
 
 	while (cur != nullptr)
 	{
@@ -95,7 +95,7 @@ void SingleList::DeleteIndex(int _index)
 	if (_index < 0 || _index > count) return;
 
 	Node* cur = head;
-	Node* prev = new Node;
+	Node* prev = nullptr;
 
 	if (_index == 0)
 	{
@@ -121,12 +121,35 @@ void SingleList::DeleteIndex(int _index)
 
 void SingleList::ClearAllNode()
 {
-
+	Node* cur = head;
+	Node* next = nullptr;
+	while (cur != nullptr)
+	{
+		next = cur->next;
+		delete cur;
+		cur = next;
+	}
+	head = nullptr;
+	curNode = nullptr;
+	count = 0;
 }
 
 int SingleList::GetNodeData(int _index)
 {
-	return 0;
+	if (_index < 0 || _index >= count)
+	{
+		cout << "범위 밖입니다." << endl;
+		return 0;
+	}
+
+	Node* find = new Node;
+	find = head;
+	for (int i = 0; i < _index; i++)
+	{
+		find = find->next;
+	}
+	int res = find->data;
+	return res;
 }
 
 int SingleList::GetListSize()
@@ -163,10 +186,15 @@ SingleList::SingleList()
 
 SingleList::~SingleList()
 {
-	if (head != nullptr)
+	Node* cur = head;
+	Node* next = nullptr;
+	while (cur != nullptr)
 	{
-		delete head;
-		delete curNode;
+		next = cur->next;
+		delete cur;
+		cur = next;
 	}
+	head = nullptr;
+	curNode = nullptr;
 	count = 0;
 }

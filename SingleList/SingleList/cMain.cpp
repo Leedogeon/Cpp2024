@@ -9,15 +9,10 @@ int main()
 	sin.InsertNode(0, 50);
 	sin.PrintAll();
 
-	cout << "///////" << endl;
-	sin.DeleteIndex(4);
-	
+	sin.ClearAllNode();
 	sin.PrintAll();
-	//cout << sin.head->data << endl;
-	//cout << sin.head->next->data << endl;
-	//cout << sin.head->next->next->data << endl;
-	//cout << sin.head->next->next->next->data << endl;
-	//cout << sin.head->next->next->next->next->data << endl;
 
+	sin.AddNode(10);
+	sin.PrintAll();
 
 }
