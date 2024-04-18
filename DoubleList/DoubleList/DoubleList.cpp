@@ -161,6 +161,15 @@ void DoubleList::Insert(int _index, int _count, int _data)
 {
 	if (_index > count || _index < 0) return;
 	
+	if (Empty())
+	{
+		Node* nNode = CreateNode(_data);
+		tail = nNode;
+		head = nNode;
+		count++;
+		_count--;
+	}
+
 	if ((count - _index) <= count / 2)
 	{
 		Node* cur = tail;
