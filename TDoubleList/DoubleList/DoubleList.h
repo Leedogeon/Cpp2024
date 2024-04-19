@@ -3,13 +3,15 @@
 
 using namespace std;
 
+template <typename T>
 struct Node
 {
-	int data;
+	T data;
 	Node* left;
 	Node* right;
 };
 
+template <typename T>
 class DoubleList
 {
 public:
@@ -17,15 +19,15 @@ public:
 	Node* tail;
 	int count;
 public:
-	void Push_Back(int _data);
-	void Push_Front(int _data);
-	Node* CreateNode(int _data);
+	void Push_Back(T _data);
+	void Push_Front(T _data);
+	Node* CreateNode(T _data);
 	int Pop_Back();
 	int Pop_Front();
 	bool Empty();
 	void Clear();
-	void Insert(int _index, int _data);
-	void Insert(int _index, int _count, int _data); // 해당되는 데이터를 count만큼
+	void Insert(int _index, T _data);
+	void Insert(int _index, int _count, T _data); // 해당되는 데이터를 count만큼
 	void DeleteNode(int _index);
 
 public:
