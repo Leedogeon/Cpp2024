@@ -81,9 +81,7 @@ void DoubleList::Clear()
 	int cnt = count;
 	if (count == 1)
 	{
-		//delete head;
 		head = nullptr;
-		//delete tail;
 		tail = nullptr;
 		count = 0;
 	}
@@ -297,4 +295,6 @@ void DoubleList::PrintAll()
 DoubleList::~DoubleList()
 {
 	Clear();
+	delete tail;
+	delete head;
 }
