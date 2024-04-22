@@ -10,6 +10,8 @@ int main()
 	DL.Push_Back(40);
 	DL.Push_Back(50);
 	DL.Push_Back(60);*/
+
+	DL.Push_Front(10);
 	DL.Insert(0, 3, 10);
 	cout << "count = " << DL.count << endl;
 	DL.PrintAll();

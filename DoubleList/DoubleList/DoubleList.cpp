@@ -20,7 +20,6 @@ void DoubleList::Push_Back(int _data)
 void DoubleList::Push_Front(int _data)
 {
 	Node* nNode = CreateNode(_data);
-	nNode->data = _data;
 	if (Empty())
 	{
 		tail = nNode;
