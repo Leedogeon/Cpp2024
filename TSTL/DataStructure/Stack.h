@@ -1,22 +1,4 @@
-#pragma once
-#include<iostream>
-using namespace std;
-#define MaxCount 5
-template <typename T>
-class Stack
-{
-private:
-	T *data;
-	int count;
-public:
-	bool IsEmpty();
-	void Push(T _data); //값넣기
-	int Check();
-public:
-	Stack(); //생성자
-	~Stack();
-};
-
+#include "stack.hpp"
 
 template <typename T>
 bool Stack<T>::IsEmpty()
@@ -27,8 +9,6 @@ bool Stack<T>::IsEmpty()
     }
     else return false;
 }
-
-
 template <typename T>
 void Stack<T>::Push(T _data)
 {
