@@ -54,9 +54,16 @@ Node* BinaryTree::DeleteNode(Node* tree, int _data)
     Node* cur = tree;
     if (cur->data == _data)
     {
-        if (cur->left == nullptr && cur -> right == nullptr)
+        if (cur->left == nullptr && cur->right == nullptr)
         {
-            
+            if (cur == rootNode)
+            {
+                rootNode = nullptr;
+                return rootNode;
+            }
+            delete tree;
+            tree = nullptr;
+
         }
         else
         {
@@ -100,15 +107,13 @@ Node* BinaryTree::DeleteNode(Node* tree, int _data)
 
 Node* BinaryTree::FindMin(Node* root)
 {
+    
     if (root->left != nullptr)
     {
-        FindMin(root->left);
         return FindMin(root->left);
     } 
-    else if (root->left == nullptr)
-    {   
-        return root;
-    }
+    return root;
+    
 }
 
 void BinaryTree::InOrder(Node* root)
@@ -131,10 +136,8 @@ BinaryTree::~BinaryTree()
         while (rootNode != nullptr)
         {
             Node* cur = FindMin(rootNode);
-            cout << "c = " << FindMin(rootNode)->data << endl;;
             RemoveNode(cur->data);
-        }
-        
+        }        
     }
     delete rootNode;
     rootNode = nullptr;

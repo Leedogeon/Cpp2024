@@ -3,18 +3,14 @@
 int main()
 {
 	BinaryTree BT;
-	BT.AddNode(2);
-	BT.AddNode(1);
-	BT.AddNode(3);
-	BT.AddNode(4);
-
-	
-
-
-//	BT.RemoveNode(1);
+	BT.AddNode(21);
+	BT.AddNode(11);
+	BT.AddNode(31);
+	BT.AddNode(41);
+	BT.AddNode(25);
+	BT.AddNode(15);
+	BT.AddNode(35);
+	BT.AddNode(45);
 
 	BT.PrintAll();
-	
-
-
 }
