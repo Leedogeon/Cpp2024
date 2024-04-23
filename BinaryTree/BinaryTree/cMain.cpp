@@ -8,9 +8,13 @@ int main()
 	BT.AddNode(3);
 	BT.AddNode(4);
 
+	
 
-	BT.RemoveNode(1);
 
-	//BT.PrintAll();
-	//cout << BT.rootNode->right->right->data << endl;
+//	BT.RemoveNode(1);
+
+	BT.PrintAll();
+	
+
+
 }
