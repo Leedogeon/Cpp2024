@@ -5,7 +5,7 @@ using namespace std;
 
 #define TABLE_SIZE 10
 
-struct  Node
+struct Node
 {
 	int key;
 	int data;

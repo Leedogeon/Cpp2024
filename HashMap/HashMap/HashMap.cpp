@@ -2,61 +2,56 @@
 
 void HashMap::Add(int _key, int value)
 {
+    if (Count() == TABLE_SIZE) return;
+
     Node* nNode = new Node;
     nNode->key = _key;
     nNode->data = value;
+    while (table[_key % TABLE_SIZE] == nullptr)
+    {
+        _key += 1;
+
+    }
+    table[_key % TABLE_SIZE] = nNode;
 }
 
 int HashMap::GetValue(int _key)
 {
-    Node** nTable = table;
-    int value;
-    for (int i = 0; i < TABLE_SIZE; i++)
+    int res;
+    for (int i = _key % TABLE_SIZE;; i++)
     {
-        if (nTable[i]->key == _key)
-            value = nTable[i]->data;
+        if (table[_key % TABLE_SIZE]->key == _key)
+        {
+            res = table[_key % TABLE_SIZE]->data;
+            break;
+        }
+            
     }
-
-    return value;
+    return res;
 }
 
 void HashMap::Remove(int _key)
 {
     Node** nTable = table;
-    for (int i = 0; i < TABLE_SIZE; i++)
-    {
-        nTable[i]->key == _key;
-        delete nTable[i];
-        nTable[i] = nullptr;
-    }
+    
 
 }
 
 int HashMap::Count()
 {
-    int count = 0;
-    Node** nTable = table;
-    for (int i = 0; i < TABLE_SIZE; i++)
-    {
-        nTable[i]->key != NULL;
-        count++;
-    }
-    return count;
+    return 0;
 }
 
 void HashMap::Clear()
 {
     Node** nTable = table;
-    for (int i = 0; i < TABLE_SIZE; i++)
-    {
-        delete nTable[i];
-        nTable[i] = nullptr;
-    }
+    
 }
 
 HashMap::HashMap()
 {
-    table = nullptr;
+    table = new Node*[TABLE_SIZE];
+
 }
 
 HashMap::~HashMap()
