@@ -16,9 +16,9 @@ class HashMap
 private:
 	Node** table;
 public:
-	void Add(int key, int value);
-	int GetValue(int key);
-	void Remove(int key);
+	void Add(int _key, int value);
+	int GetValue(int _key);
+	void Remove(int _key);
 	int Count();
 	void Clear();
 public:
