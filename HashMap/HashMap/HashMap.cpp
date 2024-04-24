@@ -7,9 +7,11 @@ void HashMap::Add(int _key, int value)
 	Node* nNode = new Node;
 	nNode->key = _key;
 	nNode->data = value;
+	if (table[_key % TABLE_SIZE]->key == _key) return;
 	while (table[_key % TABLE_SIZE] != nullptr)
 	{
 		_key += 1;
+		if (table[_key % TABLE_SIZE]->key == _key) return;
 	}
 	table[_key % TABLE_SIZE] = nNode;
 
