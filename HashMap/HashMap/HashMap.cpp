@@ -58,7 +58,12 @@ void HashMap::View()
 {
 	for (int i = 0; i < TABLE_SIZE; i++)
 	{
-		cout << table[i]->data << endl;
+		if (table[i] != nullptr)
+		{
+			cout << "i = " << i << endl;
+			cout << table[i]->data << endl;
+		}
+
 	}
 }
 

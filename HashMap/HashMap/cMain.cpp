@@ -6,14 +6,11 @@ int main()
 
 	HM.Add(1, 1);
 	HM.Add(2, 20);
+	
 	HM.Add(2, 30);
-	HM.Add(2, 40);
-	HM.Add(2, 30);
-	HM.Add(2, 30);
-	HM.Add(2, 30);
-	HM.Add(2, 50);
-	HM.Add(2, 30);
-	HM.Add(2, 60);
+	HM.Add(4, 30);
+	HM.Add(8, 30);
+	HM.Add(1, 60);
 	
 	HM.View();
 	return 0;
