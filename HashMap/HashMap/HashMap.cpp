@@ -2,61 +2,77 @@
 
 void HashMap::Add(int _key, int value)
 {
-    if (Count() == TABLE_SIZE) return;
+	if (Count() == TABLE_SIZE) return;
 
-    Node* nNode = new Node;
-    nNode->key = _key;
-    nNode->data = value;
-    while (table[_key % TABLE_SIZE] == nullptr)
-    {
-        _key += 1;
+	Node* nNode = new Node;
+	nNode->key = _key;
+	nNode->data = value;
+	while (table[_key % TABLE_SIZE] != nullptr)
+	{
+		_key += 1;
+	}
+	table[_key % TABLE_SIZE] = nNode;
 
-    }
-    table[_key % TABLE_SIZE] = nNode;
 }
 
 int HashMap::GetValue(int _key)
 {
-    int res;
-    for (int i = _key % TABLE_SIZE;; i++)
-    {
-        if (table[_key % TABLE_SIZE]->key == _key)
-        {
-            res = table[_key % TABLE_SIZE]->data;
-            break;
-        }
-            
-    }
-    return res;
+
+	if (table[_key % TABLE_SIZE] != nullptr)
+	{
+		return table[_key % TABLE_SIZE]->data;
+	}
+	return 0;
 }
 
 void HashMap::Remove(int _key)
 {
-    Node** nTable = table;
-    
+	if (table[_key % TABLE_SIZE] != nullptr)
+	{
+		delete table[_key % TABLE_SIZE];
+		table[_key % TABLE_SIZE] = nullptr;
+	}
 
 }
 
 int HashMap::Count()
 {
-    return 0;
+	int count = 0;
+	for (int i = 0; i < TABLE_SIZE; i++)
+	{
+		if (table[i] != nullptr) count++;
+	}
+	return count;
 }
 
 void HashMap::Clear()
 {
-    Node** nTable = table;
-    
+	for (int i = 0; i < TABLE_SIZE; ++i)
+	{
+		delete table[i];
+		table[i] = nullptr;
+	}
+}
+
+void HashMap::View()
+{
+	for (int i = 0; i < TABLE_SIZE; i++)
+	{
+		cout << table[i]->data << endl;
+	}
 }
 
 HashMap::HashMap()
 {
-    table = new Node*[TABLE_SIZE];
-
+	table = new Node * [TABLE_SIZE];
+	for (int i = 0; i < TABLE_SIZE; i++)
+	{
+		table[i] = nullptr;
+	}
 }
 
 HashMap::~HashMap()
 {
-    Clear();
-    delete table;
-    table = nullptr;
+	Clear();
+	delete[] table;
 }

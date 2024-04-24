@@ -21,6 +21,7 @@ public:
 	void Remove(int _key);
 	int Count();
 	void Clear();
+	void View();
 public:
 	HashMap();
 	~HashMap();
