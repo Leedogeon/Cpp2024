@@ -19,7 +19,7 @@ public:
 	void DeleteEdge(int node, int deleteEdge);
 	void ShowGraphEdge(int node);
 private:
-	Node* CreateNode(int data);
+	Node* CreateNode(int _data);
 public:
 	Graph();
 	~Graph();
