@@ -17,7 +17,7 @@ void Graph::AddEdge(int from, int to)
     }
     else
     {
-        for (int i = 1; i < 10; i++)
+        for (int i = 1; i < 9; i++)
         {
             if (graph[from][i].next == graph[to]) break;
 
@@ -70,8 +70,8 @@ void Graph::ShowGraphEdge(int node)
 
 Node* Graph::CreateNode(int _data)
 {
-    Node* nNode = new Node[10];
-    for (int i = 0; i < 10; i++)
+    Node* nNode = new Node[9];
+    for (int i = 0; i < 9; i++)
     {
         nNode[i].data = _data;
         nNode[i].next = nullptr;
@@ -88,6 +88,15 @@ Graph::Graph()
 
 Graph::~Graph()
 {
-    
+    for (int i = 0; i < 9; i++)
+    {
+        for (int j = 0; j < 9; j++)
+        {
+            if (graph[i][j].next != nullptr) graph[i][j].next = nullptr;
+        }
+        delete[] graph[i];
+        graph[i] = nullptr;
+    }
     delete[] graph;
+    graph = nullptr;
 }
