@@ -88,4 +88,6 @@ Graph::Graph()
 
 Graph::~Graph()
 {
+    
+    delete[] graph;
 }
