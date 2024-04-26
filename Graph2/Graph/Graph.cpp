@@ -30,7 +30,7 @@ void Graph::AddEdge(int from, int to)
             cur[i].next = graph[from][i].next;
 
         }
-        *graph[from] = *cur;
+        graph[from] = cur;
         graph[from][count].next = graph[to];
             
 }
@@ -73,7 +73,7 @@ void Graph::DeleteEdge(int node, int deleteEdge)
                 cur[j].next = nullptr;
                 cur[j].next = graph[node][j+temp].next;
             }
-            *graph[node] = *cur;
+            graph[node] = cur;
             break;
         }
     }
