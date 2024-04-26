@@ -8,7 +8,6 @@ int main()
 	graph.AddEdge(0, 2);
 	graph.AddEdge(0, 1);
 
-
 	graph.AddEdge(1, 4);
 	graph.AddEdge(1, 3);
 
@@ -31,8 +30,6 @@ int main()
 
 	graph.AddEdge(8, 0);
 	graph.AddEdge(8, 7);
-
-	graph.DeleteEdge(0, 1);
 
 	for (int i = 0; i < 9; i++)
 	{
