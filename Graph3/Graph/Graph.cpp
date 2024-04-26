@@ -27,16 +27,35 @@ void Graph::AddEdge(int from, int to)
 			for (int i = 0; i < graph[to][0].count; i++)
 			{
 				tNode[i] = graph[to][i];
-				tNode[i].count++;
+				tNode[i].data = graph[to][0].data;
+				tNode[i].count = graph[to][0].count + 1;
 			}
-			*graph[to] = *tNode;
-			
+
+			for (int i = 0; i < 9; i++)
+			{
+				if (graph[i][0].count != 0)
+				{
+					for (int j = 0; j<graph[i][0].count; j++)
+					{
+						if (graph[i][j].next == graph[to])
+						{
+							graph[i][j].next = tNode;
+							break;
+						}
+					}
+				}
+			}
+
+			graph[to] = tNode;
 			graph[to][(graph[to][0].count)-1].next = graph[from];
 		}
 		graph[from]->next = graph[to];
 	}
 	else
 	{
+
+		
+
 		for (int i = 0; i < graph[from][0].count; i++)
 		{
 			if (graph[from][i].next == graph[to])
@@ -47,15 +66,34 @@ void Graph::AddEdge(int from, int to)
 		for (int i = 0; i < graph[from][0].count; i++)
 		{
 			fNode[i] = graph[from][i];
-			fNode[i].count++;
+			fNode[i].data = graph[from][0].data;
+			fNode[i].count = graph[from][0].count + 1;
 		}
-		*graph[from] = *fNode;
-		graph[from][(graph[from][0].count) - 1].next = graph[to];
+		
 
 		if (graph[to][0].count == 0)
 		{
-			graph[to]->next = graph[from];
 			graph[to]->count++;
+
+			for (int i = 0; i < 9; i++)
+			{
+				if (graph[i][0].count != 0)
+				{
+					for (int j = 0; j<graph[i][0].count; j++)
+					{
+						if (graph[i][j].next == graph[from])
+						{
+							graph[i][j].next = fNode;
+							break;
+						}
+					}
+				}
+			}
+			graph[from] = fNode;
+			graph[from][graph[from][0].count-1].next = graph[to];
+			graph[to]->next = graph[from];
+			return;
+
 		}
 		else
 		{
@@ -63,13 +101,39 @@ void Graph::AddEdge(int from, int to)
 			for (int i = 0; i < graph[to][0].count; i++)
 			{
 				ttNode[i] = graph[to][i];
-				ttNode[i].count++;
+				ttNode[i].data = graph[to][0].data;
+				ttNode[i].count = graph[to][0].count + 1;
 			}
-			*graph[to] = *ttNode;
 
-			cout << graph[to][0].count << endl;
-			graph[to][(graph[to][0].count) - 1].next = graph[from];
+			for (int i = 0; i < 9; i++)
+			{
+				if (graph[i][0].count != 0)
+				{
+					for (int j = 0; j<graph[i][0].count; j++)
+					{
+						if (graph[i][j].next == graph[from])
+						{
+							graph[i][j].next = fNode;
+							break;
+						}
+					}
+					for (int j = 0; j<graph[i][0].count; j++)
+					{
+						if (graph[i][j].next == graph[to])
+						{
+							graph[i][j].next = ttNode;
+							break;
+						}
+					}
+
+				}
+			}
+			graph[from] = fNode;
+			graph[to] = ttNode;
+			graph[from][graph[from][0].count - 1].next = graph[to];
+			graph[to][graph[to][0].count - 1].next = graph[from];
 		}
+
 	}
 
 	return;
@@ -80,89 +144,133 @@ void Graph::DeleteEdge(int node, int deleteEdge)
 	if (graph[node][0].count == 0) return;
 
 	int cn = graph[node][0].count;
-	int cd = graph[deleteEdge][0].count;
-	int count = graph[node][0].count;
 
-	for (int i = 0; i < cn; i++)
+
+	if (graph[node][0].count == 1)
 	{
-		if (graph[node][i].next == graph[deleteEdge])
-			cout << "test" << endl;
+		if (graph[node]->next == graph[deleteEdge])
+		{
+			graph[node]->next = nullptr;
+			graph[node]->count = 0;
+
+			if (graph[deleteEdge][0].count == 1)
+			{
+				graph[deleteEdge]->next = nullptr;
+				graph[node]->count = 0;
+				return;
+			}
+
+			else
+			{
+				
+					Node* tNode = new Node[graph[deleteEdge][0].count - 1];
+					int temp = 0;
+					for (int i = 0; i < graph[deleteEdge][0].count-1; i++)
+					{
+						if (graph[deleteEdge][i].next == graph[node]) temp++;
+						
+						tNode[i] = graph[deleteEdge][i+temp];
+						tNode[i].data = graph[deleteEdge][0].data;
+						tNode[i].count = graph[deleteEdge][0].count-1;
+					}
+
+					for (int i = 0; i < 9; i++)
+					{
+						if (graph[i][0].count != 0)
+						{
+							for (int j = 0; j < graph[i][0].count; j++)
+							{
+								if (graph[i][j].next == graph[deleteEdge])
+								{
+									graph[i][j].next = tNode;
+									break;
+								}
+							}
+						}
+					}
+					graph[deleteEdge] = tNode;
+				
+			}
+		}
+		return;
 	}
 
-	//if (count == 1)
-	//{
-	//	if (graph[node]->next == graph[deleteEdge])
-	//	{
-	//		Node* cur = new Node;
-	//		cur->data = graph[node]->data;
-	//		cur->next = nullptr;
-	//		cur->count = 0;
+	else
+	{
 
-	//		graph[node] = cur;
+		Node* fNode = new Node[graph[node][0].count - 1];
+		int temp2 = 0;
+		for (int i = 0; i < graph[node][0].count-1; i++)
+		{
+			if (graph[node][i].next == graph[deleteEdge]) temp2++;
+			fNode[i] = graph[node][i+temp2];
+			fNode[i].data = graph[node][0].data;
+			fNode[i].count = graph[node][0].count-1;
+		}
 
-	//		if (graph[deleteEdge][0].count == 1)
-	//		{
-	//			Node* cur2 = new Node;
-	//			cur2->data = graph[deleteEdge]->data;
-	//			cur2->next = nullptr;
-	//			cur2->count = 0;
+		if (graph[deleteEdge][0].count == 1)
+		{
+			graph[deleteEdge]->count--;
+			graph[deleteEdge]->next = nullptr;
+			for (int i = 0; i < 9; i++)
+			{
+				if (graph[i][0].count != 0)
+				{
+					for (int j = 0; j < graph[i][0].count; j++)
+					{
+						if (graph[i][j].next == graph[node])
+						{
+							graph[i][j].next = fNode;
+							break;
+						}
+					}
+				}
+			}
+			graph[node] = fNode;
+			return;
 
-	//			graph[deleteEdge] = cur2;
-	//		}
+		}
+		else
+		{
+			Node* ttNode = new Node[graph[deleteEdge][0].count-1];
+			int temp3 = 0;
+			for (int i = 0; i < graph[deleteEdge][0].count-1; i++)
+			{
+				if (graph[deleteEdge][i].next == graph[node]) temp3++;
+				ttNode[i] = graph[deleteEdge][i + temp3 ];
+				ttNode[i].data = graph[deleteEdge][0].data;
+				ttNode[i].count = graph[deleteEdge][0].count -1;
+			}
+			cout << graph[deleteEdge][0].count << endl;
+			for (int i = 0; i < 9; i++)
+			{
+				if (graph[i][0].count != 0)
+				{
+					for (int j = 0; j < graph[i][0].count; j++)
+					{
+						if (graph[i][j].next == graph[node])
+						{
+							graph[i][j].next = fNode;
+							break;
+						}
+					}
+					for (int j = 0; j < graph[i][0].count; j++)
+					{
+						if (graph[i][j].next == graph[deleteEdge])
+						{
+							graph[i][j].next = ttNode;
+							break;
+						}
+					}
 
-	//		else
-	//		{
-	//			for (int i = 0; i < graph[deleteEdge][0].count; i++)
-	//			{
-
-	//				Node* cur2 = new Node[graph[deleteEdge][0].count - 1];
-	//				int temp = 0;
-	//				for (int j = 0; j < count; j++)
-	//				{
-	//					if (i == j)
-	//					{
-	//						temp++;
-
-	//					}
-	//					cur2[j].data = graph[deleteEdge][0].data;
-	//					cur2[j].count = count - 1;
-	//					cur2[j].next = nullptr;
-	//					cur2[j].next = graph[deleteEdge][j + temp].next;
-	//				}
-	//				graph[deleteEdge] = cur2;
-
-	//			}
-	//		}
-
-	//	}
-	//	return;
-	//}
-
-
-	//for (int i = 0; i < count; i++)
-	//{
-	//	if (graph[node][i].next == graph[deleteEdge])
-	//	{
-	//		Node* cur = new Node[count - 1];
-	//		int temp = 0;
-	//		for (int j = 0; j < count; j++)
-	//		{
-	//			if (i == j)
-	//			{
-	//				temp++;
-
-	//			}
-	//			cur[j].data = graph[node][0].data;
-	//			cur[j].count = count - 1;
-	//			cur[j].next = nullptr;
-	//			cur[j].next = graph[node][j + temp].next;
-	//		}
-	//		graph[node] = cur;
-	//		break;
-	//	}
-	//}
-
+				}
+			}
+			graph[node] = fNode;
+			graph[deleteEdge] = ttNode;
+		}
+	}
 }
+
 
 void Graph::ShowGraphEdge(int node)
 {
@@ -186,46 +294,7 @@ Node* Graph::CreateNode(int _data)
 	return nNode;
 }
 
-//Node* Graph::DeleteNode(int _node)
-//{
-//	int cnt = graph[_node][0].count;
-//	cout << "cnt = " << cnt << endl;
-//
-//	if (cnt == 1)
-//	{
-//		Node* cur = new Node;
-//		cur->data = graph[_node]->data;
-//		cur->next = nullptr;
-//		cur->count = 0;
-//
-//		graph[_node] = cur;
-//	}
-//	else
-//	{
-//		for (int i = 0; i < cnt; i++)
-//		{
-//			Node* cur = new Node[cnt - 1];
-//			int temp = 0;
-//			for (int j = 0; j < cnt; j++)
-//			{
-//				if (i == j)
-//				{
-//					temp++;
-//
-//				}
-//				cur[j].data = graph[_node][0].data;
-//				cur[j].count = cnt - 1;
-//				cur[j].next = nullptr;
-//				cur[j].next = graph[cnt][j + temp].next;
-//			}
-//			graph[_node] = cur;
-//			break;
-//		}
-//	}
-//
-//
-//	return graph[_node];
-//}
+
 
 
 Graph::Graph()
