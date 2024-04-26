@@ -21,6 +21,7 @@ public:
 	void ShowGraphEdge(int node);
 private:
 	Node* CreateNode(int _data);
+	void change(int _base,Node* _cng);
 public:
 	Graph();
 	~Graph();

@@ -11,7 +11,6 @@ void Graph::InitializeGraph(int nodeCount)
 
 void Graph::AddEdge(int from, int to)
 {
-
 	if (graph[from][0].count == 0)
 	{
 		graph[from]->count++;
@@ -31,22 +30,7 @@ void Graph::AddEdge(int from, int to)
 				tNode[i].count = graph[to][0].count + 1;
 			}
 
-			for (int i = 0; i < 9; i++)
-			{
-				if (graph[i][0].count != 0)
-				{
-					for (int j = 0; j<graph[i][0].count; j++)
-					{
-						if (graph[i][j].next == graph[to])
-						{
-							graph[i][j].next = tNode;
-							break;
-						}
-					}
-				}
-			}
-
-			graph[to] = tNode;
+			change(to, tNode);
 			graph[to][(graph[to][0].count)-1].next = graph[from];
 		}
 		graph[from]->next = graph[to];
@@ -54,7 +38,6 @@ void Graph::AddEdge(int from, int to)
 	else
 	{
 
-		
 
 		for (int i = 0; i < graph[from][0].count; i++)
 		{
@@ -75,21 +58,7 @@ void Graph::AddEdge(int from, int to)
 		{
 			graph[to]->count++;
 
-			for (int i = 0; i < 9; i++)
-			{
-				if (graph[i][0].count != 0)
-				{
-					for (int j = 0; j<graph[i][0].count; j++)
-					{
-						if (graph[i][j].next == graph[from])
-						{
-							graph[i][j].next = fNode;
-							break;
-						}
-					}
-				}
-			}
-			graph[from] = fNode;
+			change(from, fNode);
 			graph[from][graph[from][0].count-1].next = graph[to];
 			graph[to]->next = graph[from];
 			return;
@@ -105,31 +74,8 @@ void Graph::AddEdge(int from, int to)
 				ttNode[i].count = graph[to][0].count + 1;
 			}
 
-			for (int i = 0; i < 9; i++)
-			{
-				if (graph[i][0].count != 0)
-				{
-					for (int j = 0; j<graph[i][0].count; j++)
-					{
-						if (graph[i][j].next == graph[from])
-						{
-							graph[i][j].next = fNode;
-							break;
-						}
-					}
-					for (int j = 0; j<graph[i][0].count; j++)
-					{
-						if (graph[i][j].next == graph[to])
-						{
-							graph[i][j].next = ttNode;
-							break;
-						}
-					}
-
-				}
-			}
-			graph[from] = fNode;
-			graph[to] = ttNode;
+			change(from, fNode);
+			change(to, ttNode);
 			graph[from][graph[from][0].count - 1].next = graph[to];
 			graph[to][graph[to][0].count - 1].next = graph[from];
 		}
@@ -142,9 +88,6 @@ void Graph::AddEdge(int from, int to)
 void Graph::DeleteEdge(int node, int deleteEdge)
 {
 	if (graph[node][0].count == 0) return;
-
-	int cn = graph[node][0].count;
-
 
 	if (graph[node][0].count == 1)
 	{
@@ -174,22 +117,7 @@ void Graph::DeleteEdge(int node, int deleteEdge)
 						tNode[i].count = graph[deleteEdge][0].count-1;
 					}
 
-					for (int i = 0; i < 9; i++)
-					{
-						if (graph[i][0].count != 0)
-						{
-							for (int j = 0; j < graph[i][0].count; j++)
-							{
-								if (graph[i][j].next == graph[deleteEdge])
-								{
-									graph[i][j].next = tNode;
-									break;
-								}
-							}
-						}
-					}
-					graph[deleteEdge] = tNode;
-				
+					change(deleteEdge, tNode);
 			}
 		}
 		return;
@@ -212,21 +140,7 @@ void Graph::DeleteEdge(int node, int deleteEdge)
 		{
 			graph[deleteEdge]->count--;
 			graph[deleteEdge]->next = nullptr;
-			for (int i = 0; i < 9; i++)
-			{
-				if (graph[i][0].count != 0)
-				{
-					for (int j = 0; j < graph[i][0].count; j++)
-					{
-						if (graph[i][j].next == graph[node])
-						{
-							graph[i][j].next = fNode;
-							break;
-						}
-					}
-				}
-			}
-			graph[node] = fNode;
+			change(node, fNode);
 			return;
 
 		}
@@ -241,32 +155,8 @@ void Graph::DeleteEdge(int node, int deleteEdge)
 				ttNode[i].data = graph[deleteEdge][0].data;
 				ttNode[i].count = graph[deleteEdge][0].count -1;
 			}
-			cout << graph[deleteEdge][0].count << endl;
-			for (int i = 0; i < 9; i++)
-			{
-				if (graph[i][0].count != 0)
-				{
-					for (int j = 0; j < graph[i][0].count; j++)
-					{
-						if (graph[i][j].next == graph[node])
-						{
-							graph[i][j].next = fNode;
-							break;
-						}
-					}
-					for (int j = 0; j < graph[i][0].count; j++)
-					{
-						if (graph[i][j].next == graph[deleteEdge])
-						{
-							graph[i][j].next = ttNode;
-							break;
-						}
-					}
-
-				}
-			}
-			graph[node] = fNode;
-			graph[deleteEdge] = ttNode;
+			change(node, fNode);
+			change(deleteEdge, ttNode);
 		}
 	}
 }
@@ -294,8 +184,25 @@ Node* Graph::CreateNode(int _data)
 	return nNode;
 }
 
+void Graph::change(int _base, Node* _cng)
+{
+	for (int i = 0; i < 9; i++)
+	{
+		if (graph[i][0].count != 0)
+		{
+			for (int j = 0; j < graph[i][0].count; j++)
+			{
+				if (graph[i][j].next == graph[_base])
+				{
+					graph[i][j].next = _cng;
+					break;
+				}
+			}
+		}
+	}
+	graph[_base] = _cng;
 
-
+}
 
 Graph::Graph()
 {
