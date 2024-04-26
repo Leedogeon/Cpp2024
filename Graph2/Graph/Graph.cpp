@@ -30,7 +30,7 @@ void Graph::AddEdge(int from, int to)
             cur[i].next = graph[from][i].next;
 
         }
-        graph[from] = cur;
+        *graph[from] = *cur;
         graph[from][count].next = graph[to];
             
 }
@@ -73,7 +73,7 @@ void Graph::DeleteEdge(int node, int deleteEdge)
                 cur[j].next = nullptr;
                 cur[j].next = graph[node][j+temp].next;
             }
-            graph[node] = cur;
+            *graph[node] = *cur;
             break;
         }
     }
@@ -83,11 +83,11 @@ void Graph::DeleteEdge(int node, int deleteEdge)
 void Graph::ShowGraphEdge(int node)
 {
     int cnt = graph[node][0].count;
-    cout << graph[node]->data << " ";
+    cout << graph[node] << " ";
     for (int i = 0; i<cnt; i++)
     {
         if (graph[node][i].next == nullptr) break;
-        cout << graph[node][i].next->data << " ";
+        cout << graph[node][i].next << " ";
 
     }
     cout << endl;
