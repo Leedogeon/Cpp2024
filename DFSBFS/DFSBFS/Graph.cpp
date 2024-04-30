@@ -319,6 +319,10 @@ Graph::Graph()
 
 Graph::~Graph()
 {
+
+
+
+
     delete[] graph;
     count = 0;
     vertexs = nullptr;

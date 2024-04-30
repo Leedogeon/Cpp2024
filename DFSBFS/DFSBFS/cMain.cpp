@@ -28,10 +28,4 @@ int main()
 
 	gr.BreadthFirstSerch(1);
 
-
-
-
-
-
-
 }
