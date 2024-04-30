@@ -180,7 +180,12 @@ bool Graph::visitVertex(int node)
 
 void Graph::BreadthFirstSerch(int node)//queue
 {
+	Queue que;
+	Queue pque;
+	pque.Enqueue(node);
+	visitVertex(node);
 
+	Breadth(node, que, pque);
 }
 
 void Graph::DepthFirstSerch(int node)//stack
@@ -245,7 +250,6 @@ void Graph::Depth(int node, Stack& _stk, Stack& _pstk)
 		node = _stk.Pop();
 		if (_stk.IsEmpty())
 		{
-
 			break;
 		}
 	}
@@ -262,6 +266,26 @@ void Graph::Depth(int node, Stack& _stk, Stack& _pstk)
 	}
 
 	Depth(node, _stk, _pstk);
+	return;
+}
+
+void Graph::Breadth(int node, Queue& _que, Queue& _pque)
+{
+
+
+	for (int i = 0; i < graph[node][0].cnt; i++)
+	{
+		if (vertexs[graph[node][i].next->data]) continue;
+		_que.Enqueue(graph[node][i].next->data);
+	}
+
+	node = _que.Dequeue();
+	_pque.Enqueue(node);
+
+
+	if(_que.IsEmpty())
+
+	Breadth(node, _que, _pque);
 }
 
 

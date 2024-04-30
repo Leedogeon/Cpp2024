@@ -28,6 +28,7 @@ private:
 	Node* CreateNode(int data);
 	void change(int _base, Node* _cng);
 	void Depth(int node, Stack& _stk,Stack& _pstk);
+	void Breadth(int node, Queue& _que, Queue& _pque);
 public:
 	Graph();
 	~Graph();
