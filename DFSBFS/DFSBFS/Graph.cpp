@@ -175,7 +175,7 @@ void Graph::ShowGraphEdge(int node)
 
 bool Graph::visitVertex(int node)
 {
-	return vertexs[node] = true;
+	return !vertexs[node];
 }
 
 void Graph::BreadthFirstSerch(int node)//queue
@@ -192,6 +192,12 @@ void Graph::DepthFirstSerch(int node)//stack
 
 	Depth(node, stk, pstk);
 	pstk.PrintAll();
+
+
+	for (int i = 0; i < maxCount; i++)
+	{
+		visitVertex(i);
+	}
 }
 
 Node* Graph::CreateNode(int data)
