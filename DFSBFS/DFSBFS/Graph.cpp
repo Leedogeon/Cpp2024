@@ -3,9 +3,11 @@
 void Graph::InitializeGraph(int nodeCount)
 {
     graph = new Node* [nodeCount];
+	vertexs = new bool[nodeCount];
     for (int i = 0; i < nodeCount; i++)
     {
 		graph[i] = CreateNode(i);
+		vertexs[i] = false;
     }
 }
 
@@ -163,7 +165,7 @@ void Graph::DeleteEdge(int node, int deleteEdge)
 
 void Graph::ShowGraphEdge(int node)
 {
-	cout << graph[node]->data << endl;
+	cout << graph[node]->data << " ";
 	for (int i = 0; i < graph[node][0].cnt; i++)
 	{
 		cout << graph[node][i].next->data << " ";
@@ -174,7 +176,6 @@ void Graph::ShowGraphEdge(int node)
 bool Graph::visitVertex(int node)
 {
 	return vertexs[node] = true;
-	
 }
 
 void Graph::BreadthFirstSerch(int node)//queue
@@ -186,38 +187,11 @@ void Graph::DepthFirstSerch(int node)//stack
 {
 	Stack stk;
 	Stack pstk;
-	stk.Push(graph[node]->data);
-	visitVertex(graph[node]->data);
+	pstk.Push(node);
+	visitVertex(node);
 
-	while (!stk.IsEmpty())
-	{
-		if (vertexs[graph[node]->data] == true)
-		{
-			if (pstk.Check(graph[node]->data))
-			{
-
-			}
-			node = stk.Pop();
-			pstk.Push(node);
-			continue;
-		}
-
-
-		else
-		{
-			for (int i = 0; i < graph[node][0].cnt; i++)
-			{
-				if (vertexs[graph[node][i].next->data] == true) continue;
-				stk.Push(graph[node][i].next->data);
-			}
-			visitVertex(graph[node]->data);
-			node = stk.Pop();
-			pstk.Push(node);
-		}
-
-		
-	}
-
+	Depth(node, stk, pstk);
+	pstk.PrintAll();
 }
 
 Node* Graph::CreateNode(int data)
@@ -231,7 +205,7 @@ Node* Graph::CreateNode(int data)
 
 void Graph::change(int _base, Node* _cng)
 {
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < maxCount; i++)
 	{
 		if (graph[i][0].cnt != 0)
 		{
@@ -249,11 +223,46 @@ void Graph::change(int _base, Node* _cng)
 
 }
 
+void Graph::Depth(int node, Stack& _stk, Stack& _pstk)
+{
+	for (int i = 0; i < graph[node][0].cnt; i++)
+	{
+		if (vertexs[graph[node][i].next->data] == true) continue;
+		_stk.Push(graph[node][i].next->data);
+	}
+	
+	if (_stk.IsEmpty()) return;
+	node = _stk.Pop();
+
+	while(_pstk.Check(node))
+	{
+		node = _stk.Pop();
+		if (_stk.IsEmpty())
+		{
+
+			break;
+		}
+	}
+	if (vertexs[node] == false)
+	{
+		_pstk.Push(node);
+		visitVertex(node);
+	}
+
+
+	if (_stk.IsEmpty() && _pstk.Check(node))
+	{
+		return;
+	}
+
+	Depth(node, _stk, _pstk);
+}
+
 
 Graph::Graph()
 {
     count = 0;
-	vertexs[9] = false;
+	vertexs = nullptr;
     graph = nullptr;
 }
 

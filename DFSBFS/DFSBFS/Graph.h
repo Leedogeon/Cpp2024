@@ -1,5 +1,5 @@
 #pragma once
-
+#define maxCount 8
 #include "stack.h"
 #include "queue.h"
 
@@ -27,6 +27,7 @@ public:
 private:
 	Node* CreateNode(int data);
 	void change(int _base, Node* _cng);
+	void Depth(int node, Stack& _stk,Stack& _pstk);
 public:
 	Graph();
 	~Graph();

@@ -10,9 +10,9 @@ void Stack::Clear()
     }
 }
 
-void Stack::Count()
+int Stack::Count()
 {
-    cout << "count : " << count << endl;
+    return count;
 }
 
 bool Stack::IsEmpty()
@@ -31,7 +31,6 @@ void Stack::Push(int _data)
 
     for (int i = 0; i < count; i++)
     {
-
         nData[i] = data[i];
     }
     nData[count] = _data;
@@ -40,7 +39,6 @@ void Stack::Push(int _data)
         delete data;
     }
     data = nData;
-    cout << _data << " 입력성공" << endl;
 
     count++;
 
@@ -75,8 +73,19 @@ bool Stack::Check(int _data)
         }
         return false;
     }
+    return false;
+}
 
-
+void Stack::PrintAll()
+{
+    if (!IsEmpty())
+    {
+        for (int i = 0; i < count; i++)
+        {
+            cout << data[i] << " ";
+        }
+    }
+    cout << endl;
 }
 
 Stack::Stack()
