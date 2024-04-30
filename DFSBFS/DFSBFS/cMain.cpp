@@ -26,6 +26,9 @@ int main()
 
 	gr.DepthFirstSerch(1);
 
+	gr.BreadthFirstSerch(1);
+
+
 
 
 

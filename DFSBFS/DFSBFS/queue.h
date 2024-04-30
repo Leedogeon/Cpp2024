@@ -14,7 +14,8 @@ public:
 	bool IsEmpty();
 	void Enqueue(int _data);
 	int Dequeue();
-	void Check();
+	bool Check(int _data);
+	void PrintAll();
 public:
 	Queue();
 	~Queue();

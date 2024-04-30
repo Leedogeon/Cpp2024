@@ -11,7 +11,6 @@ void Queue::Clear()
 
 int Queue::Count()
 {
-    cout << "count = " << count << endl;
     return count;
 }
 
@@ -38,16 +37,15 @@ void Queue::Enqueue(int _data)
         nData[count] = _data;
         delete data;
         data = nData;
-        cout << _data << " 입력" << endl;
     }
     count++;
 }
 
 int Queue::Dequeue()
 {
+    int res = data[0];
     if (!IsEmpty())
     {
-        cout << data[0] << " 삭제" << endl;
         int* nData = new int[count];
         for (int i = 0; i < count - 1; i++)
         {
@@ -57,18 +55,31 @@ int Queue::Dequeue()
         data = nData;
         count--;
     }
-
-    return 0;
+    return res;
 }
 
-void Queue::Check()
+bool Queue::Check(int _data)
 {
     if (!IsEmpty())
     {
         for (int i = 0; i < count; i++)
         {
-            cout << "data[" << i << "] : " << data[i] << endl;
+            if (data[i] == _data) return true;
         }
+        return false;
+    }
+    return false;
+}
+
+void Queue::PrintAll()
+{
+    if (!IsEmpty())
+    {
+        for (int i = 0; i < count; i++)
+        {
+            cout << data[i] << " ";
+        }
+        cout << endl;
     }
 }
 

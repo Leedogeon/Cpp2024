@@ -175,22 +175,31 @@ void Graph::ShowGraphEdge(int node)
 
 bool Graph::visitVertex(int node)
 {
-	if (vertexs[node]) return vertexs[node] = true;
-	else return vertexs[node] = true;
+	if (vertexs[node] == false) return vertexs[node] = true;
+	else return vertexs[node] = false;
 }
 
 void Graph::BreadthFirstSerch(int node)//queue
 {
+	cout << "Breath" << endl;
 	Queue que;
 	Queue pque;
+
 	pque.Enqueue(node);
 	visitVertex(node);
 
 	Breadth(node, que, pque);
+	pque.PrintAll();
+
+	for (int i = 0; i < maxCount; i++)
+	{
+		visitVertex(i);
+	}
 }
 
 void Graph::DepthFirstSerch(int node)//stack
 {
+	cout << "depth" << endl;
 	Stack stk;
 	Stack pstk;
 	pstk.Push(node);
@@ -272,21 +281,32 @@ void Graph::Depth(int node, Stack& _stk, Stack& _pstk)
 
 void Graph::Breadth(int node, Queue& _que, Queue& _pque)
 {
-
-
 	for (int i = 0; i < graph[node][0].cnt; i++)
 	{
 		if (vertexs[graph[node][i].next->data]) continue;
 		_que.Enqueue(graph[node][i].next->data);
 	}
-
+	if (_que.IsEmpty()) return;
 	node = _que.Dequeue();
-	_pque.Enqueue(node);
+		
+	while (_pque.Check(node))
+	{	
+		node = _que.Dequeue();
+		if (_que.IsEmpty()) break;
+	}
 
+	if (vertexs[node] == false)
+	{
+		_pque.Enqueue(node);
+		visitVertex(node);
+	}
 
-	if (_que.IsEmpty())
+	if (_que.IsEmpty() && _pque.Check(node))
+	{
+		return;
+	}
+	Breadth(node, _que, _pque);
 
-		Breadth(node, _que, _pque);
 }
 
 
