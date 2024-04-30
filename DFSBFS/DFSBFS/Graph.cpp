@@ -320,10 +320,16 @@ Graph::Graph()
 Graph::~Graph()
 {
 
-
-
+	for (int i = 0; i < maxCount; i++)
+	{
+		graph[i] = CreateNode(0);
+		delete graph[i];
+		graph[i] = nullptr;
+		vertexs[i] = false;
+	}
 
     delete[] graph;
     count = 0;
+	delete[] vertexs;
     vertexs = nullptr;
 }
