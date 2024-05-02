@@ -19,7 +19,11 @@ void PriorityQueue::Push(int _priority, int _data)
     {
         for (int i = 0; i < count; i++)
         {
-            if (heap[i].priority == _priority) return;
+            if (heap[i].priority == _priority)
+            {
+                heap[count] = {};
+                return;
+            }
         }
     }
     
