@@ -13,6 +13,9 @@ void Graph::InitializeGraph(int nodeCount)
 
 void Graph::AddEdge(int from, int to)
 {
+	
+
+
 	if (graph[from][0].cnt == 0)
 	{
 		graph[from]->cnt++;
@@ -39,6 +42,10 @@ void Graph::AddEdge(int from, int to)
 	}
 	else
 	{
+		for (int i = 0; i < graph[from][0].cnt; i++)
+		{
+			if (graph[from][i].next == graph[to]) return;
+		}
 
 
 		for (int i = 0; i < graph[from][0].cnt; i++)
