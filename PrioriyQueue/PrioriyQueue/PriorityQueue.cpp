@@ -16,7 +16,7 @@ void PriorityQueue::Push(int _priority, int _data)
         return;
     }
 
-    if (count == 1)
+    if (count >= 1)
     {
         for (int i = 0; i < count; i++)
         {
