@@ -10,38 +10,46 @@ void PriorityQueue::Push(int _priority, int _data)
 {
     heap[count].priority = _priority;
     heap[count].data = _data;
-    count++;
-    if (count == 1) return;
-    
-    //(자식-1)/2 = 부모
-    if (GetParentIndex(heap[count].priority) > heap[count].priority)
+    if (count == 0)
     {
-        while (GetParentIndex(heap[count].priority) > heap[count].priority)
+        count++;
+        return;
+    }
+    //(자식-1)/2 = 부모
+    int cnt = count;
+    if (heap[GetParentIndex(cnt)].priority > heap[cnt].priority)
+    {
+        while (heap[GetParentIndex(cnt)].priority > heap[cnt].priority)
         {
-            Swap(GetParentIndex(heap[count].priority), heap[count].priority);
+            Swap(GetParentIndex(cnt),cnt);
+            cnt = GetParentIndex(cnt);
         }
     }
+    count++;
+
 }
 
 Node PriorityQueue::Pop()
 {
-    if (IsEmpty()) return;
-
-
     Node node = heap[0];
-    heap[0].priority = heap[count].priority;
-    heap[0].data = heap[count].priority;
-    count--;
-    int cur = heap[0].priority;
-    int next = GetChildIndex(cur);
-    heap[count] = {};
+    if (IsEmpty()) return node;
 
-    if (GetChildIndex(cur) < cur)
+    int cnt = 0;
+    int next = cnt;
+    count--;
+
+    heap[0] = heap[count];
+
+    heap[count] = {0};
+
+    if (heap[GetChildIndex(cnt)].priority < heap[cnt].priority)
     {
-        while (GetChildIndex(cur) < cur)
+        while (heap[GetChildIndex(cnt)].priority < heap[cnt].priority)
         {
-            Swap(GetChildIndex(cur), cur);
-            cur = next;
+            next = GetChildIndex(cnt);
+            if (next >= count) break;
+            Swap(GetChildIndex(cnt), cnt);
+            cnt = next;
         }
     }
 
@@ -53,19 +61,30 @@ int PriorityQueue::Count()
     return count;
 }
 
+void PriorityQueue::PrintAll()
+{
+    for (int i = 0; i < Count(); i++)
+    {
+        cout << heap[i].data << endl;
+    }
+}
+
 int PriorityQueue::GetChildIndex(int selfIndex)
 {
     int res = 0;
-    if (selfIndex > GetLeftChildIndex(selfIndex))
+    if (heap[selfIndex].priority > heap[GetLeftChildIndex(selfIndex)].priority)
     {
-        //Swap(selfIndex, GetLeftChildIndex(selfIndex));
-        res = GetLeftChildIndex(selfIndex);
+        if (heap[selfIndex].priority > heap[GetRightChildIndex(selfIndex)].priority)
+        {
+            res = heap[GetLeftChildIndex(selfIndex)].priority > heap[GetRightChildIndex(selfIndex)].priority ? GetRightChildIndex(selfIndex) : GetLeftChildIndex(selfIndex);
+        }
+        else res = GetLeftChildIndex(selfIndex);
     }
-    else if (selfIndex > GetRightChildIndex(selfIndex))
+    else if (heap[selfIndex].priority > heap[GetRightChildIndex(selfIndex)].priority)
     {
-        //Swap(selfIndex, GetRightChildIndex(selfIndex));
         res = GetRightChildIndex(selfIndex);
     }
+    
     return res;
 }
 

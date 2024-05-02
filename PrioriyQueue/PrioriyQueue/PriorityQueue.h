@@ -24,6 +24,7 @@ public:
 	//우선순위가 높은 Node 반환
 	Node Pop();
 	int Count();
+	void PrintAll();
 private:
 	//우선수위 높은 자식의 index를 반환
 	int GetChildIndex(int selfIndex);
