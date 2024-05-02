@@ -13,7 +13,7 @@ int main()
 	PQ.Push(12, 12);
 	PQ.Push(19, 19);
 	PQ.Push(18, 18);
-
+	PQ.Push(18,18);
 
 	while (!PQ.IsEmpty())
 	{

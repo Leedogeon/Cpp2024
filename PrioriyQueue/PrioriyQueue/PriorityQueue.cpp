@@ -15,6 +15,12 @@ void PriorityQueue::Push(int _priority, int _data)
         count++;
         return;
     }
+
+    for (int i = 0; i < count; i++)
+    {
+        if (heap[i].priority == _priority) return;
+    }
+
     //(자식-1)/2 = 부모
     int cnt = count;
     if (heap[GetParentIndex(cnt)].priority > heap[cnt].priority)
