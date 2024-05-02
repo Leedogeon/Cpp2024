@@ -52,7 +52,7 @@ Node PriorityQueue::Pop()
 
     heap[0] = heap[count];
 
-    heap[count] = {0};
+    heap[count] = {};
 
     if (heap[GetChildIndex(cnt)].priority < heap[cnt].priority)
     {
