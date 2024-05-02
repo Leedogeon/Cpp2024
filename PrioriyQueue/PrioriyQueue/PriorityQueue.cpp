@@ -8,8 +8,7 @@ bool PriorityQueue::IsEmpty()
 
 void PriorityQueue::Push(int _priority, int _data)
 {
-    heap[count].priority = _priority;
-    heap[count].data = _data;
+    heap[count] = { _priority,_data };
     if (count == 0)
     {
         count++;
