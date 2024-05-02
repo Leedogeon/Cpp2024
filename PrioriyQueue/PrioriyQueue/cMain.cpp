@@ -15,26 +15,10 @@ int main()
 	PQ.Push(18, 18);
 
 
-
-	PQ.PrintAll();
-
-	PQ.Pop();
-
-	cout << "----------" << endl;
-
-	PQ.PrintAll();
-
-	PQ.Pop();
-
-	cout << "----------" << endl;
-
-	PQ.PrintAll();
-
-	PQ.Pop();
-
-	cout << "----------" << endl;
-
-	PQ.PrintAll();
+	while (!PQ.IsEmpty())
+	{
+		cout << PQ.Pop().data << endl;
+	}
 
 
 }
