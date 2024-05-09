@@ -14,9 +14,9 @@ void main()
 
 void InsertSort(int* pArray, int num)
 {
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < num-1; i++)
 	{
-		for (int j = i+1; j < 10; j++)
+		for (int j = i+1; j < num; j++)
 		{
 			if (pArray[i] > pArray[j])
 			{
