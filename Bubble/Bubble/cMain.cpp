@@ -16,13 +16,20 @@ void main()
 
 void BubbleSort(int* pArray, int num)
 {
-	for (int i = 0; i<10; i++)
+	int max = 9;
+	for (int i = 0; i<max+1; i++)
 	{
-		for (int j = 0; j < 9; j++)
+		for (int j = 0; j < max; j++)
 		{
 			if (pArray[j] > pArray[j+1])
 			{
 				SWAP(pArray[j], pArray[j+1]);
+				
+			}
+			if (j == max-1)
+			{
+				cout << "test" << endl;
+				max -= 2;
 			}
 		}
 	}
