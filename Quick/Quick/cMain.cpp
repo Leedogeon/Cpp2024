@@ -10,6 +10,8 @@ void main()
 {
 	int array[10] = { 3,0,1,8,7,2,5,4,9,6 };
 	QuickSort(array, 0, 9);
+
+	Show(array,10);
 }
 
 void QuickSort(int* pNum, int left, int right)
@@ -29,25 +31,10 @@ void QuickSort(int* pNum, int left, int right)
 		else right--;
 	}
 
-	cout << "left = " << left << endl;
-	cout << "right = " << right << endl;
-
-	if(left >= 1)
-	{
-		QuickSort(pNum, 0, left - 1);
-		cout << left << endl;
-	}
-	
-	//if ()
-	//{
-	//	QuickSort(pNum, right + 2, 9);
-	//	return;
-	//}
-
-
-
-	Show(pNum, 10);
-	//±¸Çö
+	if (left <= 1) return;
+	QuickSort(pNum, 0, left - 1);
+	if (right + 2 >= 9) return;
+	QuickSort(pNum, right + 2, 9);
 }
 
 void Show(int* pArray, int num)
