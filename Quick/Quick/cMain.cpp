@@ -16,7 +16,12 @@ void main()
 
 void QuickSort(int* pNum, int left, int right)
 {
+	int cnt = 0;
 	bool check = false;
+	int low = left;
+	int max = right;
+	cout << "low = " << low << endl;
+	cout << "right = " << right << endl;
 	while (left <= right)
 	{
 		if (pNum[left] > pNum[right])
@@ -25,16 +30,19 @@ void QuickSort(int* pNum, int left, int right)
 			if (check == false) check = true;
 			else if (check == true) check = false;
 
+			cnt++;
+
 		}
-		
 		if (check == true) left++;
 		else right--;
 	}
+	if (cnt == 0) return;
 
-	if (left <= 1) return;
-	QuickSort(pNum, 0, left - 1);
-	if (right + 2 >= 9) return;
-	QuickSort(pNum, right + 2, 9);
+	Show(pNum, 10);
+	if (low >= left) return;
+	QuickSort(pNum, low, left - 1);
+	if (left >= max) return;
+	QuickSort(pNum, left , max);
 }
 
 void Show(int* pArray, int num)
