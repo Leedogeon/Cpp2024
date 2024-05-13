@@ -36,9 +36,8 @@ void QuickSort(int* pNum, int left, int right)
 	}
 	if (cnt == 0) return;
 
-	if (low >= left) return;
+	Show(pNum, 10);
 	QuickSort(pNum, low, left);
-	if (left+1 >= max) return;
 	QuickSort(pNum, left+1 , max);
 }
 
