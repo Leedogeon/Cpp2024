@@ -17,23 +17,22 @@ void ShellSort(int* pNum, int num)
 	int half = num/2;
 	for (int i = 0;i<9;i++)
 	{
-
 		for (int j = 0;j<num-half; j++)
 		{
 			if (pNum[j] > pNum[j+half])
 			{
 				SWAP(pNum[j],pNum[j+half]);
-
-				for (int i = j; j > 0;)
+				if (j - half >= 0)
 				{
 					if (pNum[j] < pNum[j - half])
+					{
 						SWAP(pNum[j], pNum[j - half]);
-
-					j = j - half;
+					}
 				}
 			}
 		}
 		half /= 2;
+		if (half == 0) break;
 	}
 
 	Show(pNum, num);
