@@ -20,8 +20,6 @@ void QuickSort(int* pNum, int left, int right)
 	bool check = false;
 	int low = left;
 	int max = right;
-	cout << "low = " << low << endl;
-	cout << "right = " << right << endl;
 	while (left < right)
 	{
 		if (pNum[left] > pNum[right])
@@ -38,7 +36,6 @@ void QuickSort(int* pNum, int left, int right)
 	}
 	if (cnt == 0) return;
 
-	Show(pNum, 10);
 	if (low >= left) return;
 	QuickSort(pNum, low, left);
 	if (left+1 >= max) return;
