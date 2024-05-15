@@ -108,11 +108,6 @@ void Dijkstra::ShowGraphEdge(int node)
         cout << graph[node][i].next->data << " ";
     }
     cout << endl;
-    for (int i = 0; i < graph[node][0].cnt; i++)
-    {
-        cout << "pio = " << graph[node][i].pio << " ";
-    }
-    cout << endl;
     
 }
 
@@ -134,12 +129,14 @@ void Dijkstra::BreadthFirstSerch(int node)
     Breadth(node, pque);
 
     
-
-    for (int i = 0; i < pque.size(); i++)
+    cout << "°æ·Î : ";
+    for (int i = 1; i < Max; i++)
     {
-        cout << pque.front() << " ";
-        pque.front()++;
+        cout << pque.front();
+        pque.pop();
+        if (pque.size() != 1) cout << "->";
     }
+
 
     for (int i = 0; i < Max; i++)
     {
@@ -160,11 +157,6 @@ Node* Dijkstra::createNode(int data)
 
 void Dijkstra::Breadth(int node, queue<int>& pque)
 {
-    for (int i = 1; i < dis.size(); i++)
-    {
-        cout << "dis = " << dis[i] << endl;
-    }
-    cout << endl;
     int check = 0;
     for (int i = 0; i < graph[node][0].cnt; i++)
     {
@@ -173,7 +165,7 @@ void Dijkstra::Breadth(int node, queue<int>& pque)
 
         if (dis[graph[node][i].next->data] == 0)
         {
-            dis[graph[node][i].next->data] = graph[node][i].pio;
+            dis[graph[node][i].next->data] = dis[node] + graph[node][i].pio;
 
         }
         else
@@ -201,7 +193,6 @@ void Dijkstra::Breadth(int node, queue<int>& pque)
             temp = dis[i];
             res = i;
         }
-
     }
     pque.push(res);
 
