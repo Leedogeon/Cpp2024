@@ -130,11 +130,11 @@ void Dijkstra::BreadthFirstSerch(int node)
 
     
     cout << "°æ·Î : ";
-    for (int i = 1; i < Max; i++)
+    while (pque.size() != 0)
     {
         cout << pque.front();
         pque.pop();
-        if (pque.size() != 1) cout << "->";
+        cout << " -> ";
     }
 
 
@@ -162,7 +162,7 @@ void Dijkstra::Breadth(int node, queue<int>& pque)
     {
         if (vertexs[graph[node][i].next->data]) continue;
         check++;
-
+        vs[graph[node][i].next->data] = node;
         if (dis[graph[node][i].next->data] == 0)
         {
             dis[graph[node][i].next->data] = dis[node] + graph[node][i].pio;
@@ -178,8 +178,6 @@ void Dijkstra::Breadth(int node, queue<int>& pque)
     }
     if (check == 0)
     {
-        pque.push(node);
-        visitVertex(node);
         return;
     }
     int temp = 99;
@@ -194,11 +192,32 @@ void Dijkstra::Breadth(int node, queue<int>& pque)
             res = i;
         }
     }
-    pque.push(res);
-
     visitVertex(res);
-
+    pque.push(res);
     Breadth(res, pque);
+
+
+    cout << "res = " << res << endl;
+
+    int tm = 99;
+    for (int i = 1; i < Max; i++)
+    {
+        if (vertexs[i] == false && vs[i] == res)
+        {
+
+            if (dis[i] != 0 && tm > dis[i])
+            {
+                tm = dis[i];
+            }
+        }
+    }
+    if (tm != 99)
+    {
+        visitVertex(tm);
+        pque.push(tm);
+        Breadth(tm, pque);
+    }
+
 }
 
 void Dijkstra::change(int _base, Node* _cng)
@@ -230,6 +249,7 @@ Dijkstra::Dijkstra()
     for (int i = 0; i < Max; i++)
     {
         dis.insert({ i,0 });
+        vs.insert({ i,0 });
     }
 }
 

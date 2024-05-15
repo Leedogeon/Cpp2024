@@ -19,6 +19,7 @@ private:
 	bool* vertexs;
 	Node** graph;
 	map<int, int> dis;
+	map<int, int> vs;
 public:
 	void Init(int nodeCount);
 	void AddEdge(int from, int to, int pio);

@@ -12,10 +12,10 @@ int main()
 	dx.AddEdge(2,4,3);
 	dx.AddEdge(2, 3, 5);
 	dx.AddEdge(3, 5, 1);
-	dx.AddEdge(3,6,5);
+	//dx.AddEdge(3,6,5);
 	dx.AddEdge(4, 5, 2);
 	dx.AddEdge(4, 6, 4);
-	dx.AddEdge(5, 6, 2);
+	//dx.AddEdge(5, 6, 2);
 
 	for (int i = 0; i < Max; i++)
 	{
