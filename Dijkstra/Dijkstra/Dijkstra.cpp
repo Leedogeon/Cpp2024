@@ -20,6 +20,7 @@ void Dijkstra::AddEdge(int from, int to, int pio)
         if (graph[to][0].cnt == 0)
         {
             graph[to]->next = graph[from];
+            graph[to]->pio = pio;
             graph[to]->cnt++;
         }
         else
@@ -107,6 +108,12 @@ void Dijkstra::ShowGraphEdge(int node)
         cout << graph[node][i].next->data << " ";
     }
     cout << endl;
+    for (int i = 0; i < graph[node][0].cnt; i++)
+    {
+        cout << "pio = " << graph[node][i].pio << " ";
+    }
+    cout << endl;
+    
 }
 
 
@@ -119,13 +126,14 @@ bool Dijkstra::visitVertex(int node)
 
 void Dijkstra::BreadthFirstSerch(int node)
 {
-    queue<int> que;
     queue<int> pque;
 
     pque.push(node);
     visitVertex(node);
 
-    Breadth(node, que, pque);
+    Breadth(node, pque);
+
+    
 
     for (int i = 0; i < pque.size(); i++)
     {
@@ -150,15 +158,23 @@ Node* Dijkstra::createNode(int data)
     return node;
 }
 
-void Dijkstra::Breadth(int node, queue<int>& que, queue<int>& pque)
+void Dijkstra::Breadth(int node, queue<int>& pque)
 {
+    for (int i = 1; i < dis.size(); i++)
+    {
+        cout << "dis = " << dis[i] << endl;
+    }
+    cout << endl;
+    int check = 0;
     for (int i = 0; i < graph[node][0].cnt; i++)
     {
         if (vertexs[graph[node][i].next->data]) continue;
-        //que.push(graph[node][i].next->data);
+        check++;
+
         if (dis[graph[node][i].next->data] == 0)
         {
             dis[graph[node][i].next->data] = graph[node][i].pio;
+
         }
         else
         {
@@ -168,12 +184,18 @@ void Dijkstra::Breadth(int node, queue<int>& que, queue<int>& pque)
             }
         }
     }
-    int temp = dis[0];
+    if (check == 0)
+    {
+        pque.push(node);
+        visitVertex(node);
+        return;
+    }
+    int temp = 99;
     int res = 0;
-    for (int i = 0; i < dis.size(); i++)
+    for (int i = 1; i < dis.size(); i++)
     {
         if (dis[i] == 0) continue;
-
+        if (vertexs[i] == true) continue;
         if (dis[i] < temp)
         {
             temp = dis[i];
@@ -183,68 +205,9 @@ void Dijkstra::Breadth(int node, queue<int>& que, queue<int>& pque)
     }
     pque.push(res);
 
+    visitVertex(res);
 
-    Breadth(res, que, pque);
-
-
-
-
-
-
-
-    if (que.empty()) return;
-    
-    int next = que.front();
-    /*for (int i = 0; i < que.size(); i++)
-    {
-        dis[next] += 
-    }*/
-
-    node = que.front();
-    que.pop();
-    
-    int qf = pque.front();
-    bool check = false;
-    while (true)
-    {
-        qf = pque.front();
-        
-        for (int i = 0; i < pque.size(); i++)
-        {
-            if (qf == node)
-            {
-                check = true;
-                break;
-            }
-            else qf++;
-        }
-        if (check == true)
-        {
-            que.pop();
-            if (que.empty()) break;
-            node = que.front();
-            check = false;
-        }
-        else break;
-    }
-    
-
-    if (vertexs[node] == false)
-    {
-        pque.push(node);
-        visitVertex(node);
-    }
-
-    if (que.empty())
-    {
-        qf = pque.front();
-        for (int i = 0; i < pque.size(); i++)
-        {
-            if (qf == node) return;
-        }
-    }
-    Breadth(node, que, pque);
-
+    Breadth(res, pque);
 }
 
 void Dijkstra::change(int _base, Node* _cng)
@@ -264,17 +227,6 @@ void Dijkstra::change(int _base, Node* _cng)
         }
     }
     graph[_base] = _cng;
-}
-void Dijkstra::FindNext(int front, queue<int>& que, queue<int>& pque)
-{
-    for (int i = 0; i < graph[front][0].cnt; i++)
-    {
-        //graph[front][i].next == 
-    }
-
-
-
-    FindNext(front,que,pque);
 }
 
 

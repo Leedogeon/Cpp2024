@@ -27,9 +27,8 @@ public:
 	void ShowGraphEdge(int node);
 private:
 	Node* createNode(int data);
-	void Breadth(int node, queue<int> &que, queue<int> &pque);
+	void Breadth(int node, queue<int> &pque);
 	void change(int _base, Node* _cng);
-	void FindNext(int front,queue<int>& que, queue<int> &pque);
 public:
 	Dijkstra();
 	~Dijkstra();
