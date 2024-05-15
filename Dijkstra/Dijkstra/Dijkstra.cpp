@@ -155,28 +155,51 @@ void Dijkstra::Breadth(int node, queue<int>& que, queue<int>& pque)
     for (int i = 0; i < graph[node][0].cnt; i++)
     {
         if (vertexs[graph[node][i].next->data]) continue;
-        que.push(graph[node][i].next->data);
-    }
-    if (que.empty()) return;
-    
-    int temp = 99;
-    int qf1 = que.front();
-    for (int i = 0; i < que.size(); i++)
-    {
-        for (int i = 0; i < graph[node][0].cnt; i++)
+        //que.push(graph[node][i].next->data);
+        if (dis[graph[node][i].next->data] == 0)
         {
-            if (graph[node][i].next->data == qf1)
+            dis[graph[node][i].next->data] = graph[node][i].pio;
+        }
+        else
+        {
+            if (dis[graph[node][i].next->data] > dis[node] + graph[node][i].pio)
             {
-                if (temp > graph[node][i].pio)
-                {
-                    temp = graph[node][i].pio;
-                    node = que.front();
-                }
+                dis[graph[node][i].next->data] = dis[node] + graph[node][i].pio;
             }
         }
     }
+    int temp = dis[0];
+    int res = 0;
+    for (int i = 0; i < dis.size(); i++)
+    {
+        if (dis[i] == 0) continue;
+
+        if (dis[i] < temp)
+        {
+            temp = dis[i];
+            res = i;
+        }
+
+    }
+    pque.push(res);
+
+
+    Breadth(res, que, pque);
+
+
+
+
+
+
+
+    if (que.empty()) return;
     
-    
+    int next = que.front();
+    /*for (int i = 0; i < que.size(); i++)
+    {
+        dis[next] += 
+    }*/
+
     node = que.front();
     que.pop();
     
@@ -242,14 +265,32 @@ void Dijkstra::change(int _base, Node* _cng)
     }
     graph[_base] = _cng;
 }
+void Dijkstra::FindNext(int front, queue<int>& que, queue<int>& pque)
+{
+    for (int i = 0; i < graph[front][0].cnt; i++)
+    {
+        //graph[front][i].next == 
+    }
+
+
+
+    FindNext(front,que,pque);
+}
+
+
 
 Dijkstra::Dijkstra()
 {
     count = 0;
     vertexs = nullptr;
     graph = nullptr;
+    for (int i = 0; i < Max; i++)
+    {
+        dis.insert({ i,0 });
+    }
 }
 
 Dijkstra::~Dijkstra()
 {
 }
+

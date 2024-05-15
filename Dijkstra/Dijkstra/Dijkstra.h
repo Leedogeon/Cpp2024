@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <queue>
+#include<map>
 #define Max 7
 using namespace std;
 
@@ -17,6 +18,7 @@ private:
 	int count;
 	bool* vertexs;
 	Node** graph;
+	map<int, int> dis;
 public:
 	void Init(int nodeCount);
 	void AddEdge(int from, int to, int pio);
@@ -27,6 +29,7 @@ private:
 	Node* createNode(int data);
 	void Breadth(int node, queue<int> &que, queue<int> &pque);
 	void change(int _base, Node* _cng);
+	void FindNext(int front,queue<int>& que, queue<int> &pque);
 public:
 	Dijkstra();
 	~Dijkstra();
