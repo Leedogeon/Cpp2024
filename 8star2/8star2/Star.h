@@ -19,7 +19,7 @@ struct Node
 };
 class Star
 {
-private:
+public:
 	Node arr[MaxY][MaxX] = {};
 	list<Node> lb;
 
