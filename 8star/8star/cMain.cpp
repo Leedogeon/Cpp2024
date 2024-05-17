@@ -1,6 +1,6 @@
 #include<iostream>
 #include<map>
-#include<queue>
+#include<list>
 
 using namespace std;
 #define MaxX 10
@@ -10,23 +10,33 @@ struct block
 {
 	int x;
 	int y;
+	int find;
+	int Mdis;
+	int move;
 	int res;
 };
+
+
 void FindDisT(int nX, int nY, int lX, int lY);
 void FindDisX(int nX, int nY, int lX, int lY);
 
-int arr[3][MaxY][MaxX] = {};
-int arr2[1][MaxY][MaxX] = {};
-queue<block> qb;
+block arr[MaxY][MaxX] = {};
+list<block> lb;
 int main()
 {
-	//arr[0][3][2] = 99;
-	//arr[0][3][3] = 99;
-	//arr[0][3][4] = 99;
-	//arr[0][3][5] = 99;
+	for (int i = 0; i < MaxY; i++)
+	{
+		for (int j = 0; j < MaxX; j++)
+		{
+			arr[i][j].x = j;
+			arr[i][j].y = i;
+		}
+	}
+	arr[3][2].find = 99;
+	arr[3][3].find = 99;
+	arr[3][4].find = 99;
+	arr[3][5].find = 99;
 
-	arr[0][1][1] = 1;
-	arr[0][5][8] = -1;
 	int startX = 1;
 	int startY = 1;
 	int nextX = startX;
@@ -36,50 +46,63 @@ int main()
 	int disX = 0;
 	int disY = 0;
 
-	FindDisX(nextX-1, nextY-1, lastX, lastY);
-	cout << arr[2][nextX-1][nextY-1];
+	FindDisT(nextX + 1, nextY, lastX, lastY);
+	FindDisX(nextX + 1, nextY + 1, lastX, lastY);
+	FindDisT(nextX, nextY + 1, lastX, lastY);
+	FindDisX(nextX - 1, nextY + 1, lastX, lastY);
+	FindDisT(nextX - 1, nextY, lastX, lastY);
+	FindDisX(nextX - 1, nextY - 1, lastX, lastY);
+	FindDisT(nextX, nextY - 1, lastX, lastY);
+	FindDisX(nextX + 1, nextY - 1, lastX, lastY);
+
+	
+	
 
 
-	//while (nextX != lastX && nextY != lastY)
-	//{
-	//	cout << "X = " << nextX << endl;
-	//	cout << "Y = " << nextY << endl;
-	//	int temp = 1000;
-	//	int nx=nextX;
-	//	int ny=nextY;
-	//	FindDisT(nextX + 1, nextY, lastX, lastY);
-	//	FindDisX(nextX + 1, nextY + 1, lastX, lastY);
-	//	FindDisT(nextX, nextY + 1, lastX, lastY);
-	//	FindDisX(nextX - 1, nextY + 1, lastX, lastY);
-	//	FindDisT(nextX - 1, nextY, lastX, lastY);
-	//	FindDisX(nextX - 1, nextY - 1, lastX, lastY);
-	//	FindDisT(nextX, nextY - 1, lastX, lastY);
-	//	FindDisX(nextX + 1, nextY - 1, lastX, lastY);
 
-	//	for (int i = 0; i < qb.size(); i++)
-	//	{
-	//		if (temp > qb.front().res)
-	//		{
-	//			temp = qb.front().res;
-	//			nx = qb.front().x;
-	//			ny = qb.front().y;
-	//		}
-	//		else if (temp == qb.front().res)
-	//		{
-	//			if (arr[1][nx][ny] > arr[1][qb.front().x][qb.front().y])
-	//			{
-	//				temp = qb.front().res;
-	//				nx = qb.front().x;
-	//				ny = qb.front().y;
-	//			}
-	//		}
-	//		qb.pop();
-	//	}
+	while (nextX != lastX && nextY != lastY)
+	{
+		cout << "X = " << nextX << endl;
+		cout << "Y = " << nextY << endl;
+		int temp = 1000;
+		int nx=nextX;
+		int ny=nextY;
+		FindDisT(nextX + 1, nextY, lastX, lastY);
+		FindDisX(nextX + 1, nextY + 1, lastX, lastY);
+		FindDisT(nextX, nextY + 1, lastX, lastY);
+		FindDisX(nextX - 1, nextY + 1, lastX, lastY);
+		FindDisT(nextX - 1, nextY, lastX, lastY);
+		FindDisX(nextX - 1, nextY - 1, lastX, lastY);
+		FindDisT(nextX, nextY - 1, lastX, lastY);
+		FindDisX(nextX + 1, nextY - 1, lastX, lastY);
 
-	//	nextX = nx;
-	//	nextY = ny;
+		
 
-	//}
+		list<block>::iterator it = lb.begin();
+
+		for (int i = 0; i < lb.size(); i++)
+		{
+			if (temp > it->res)
+			{
+				temp = it->res;
+				nx = it->x;
+				ny = it->y;
+			}
+			else if (temp == it->res)
+			{
+				if (arr[nx][ny].Mdis > arr[it->x][it->y].Mdis)
+				{
+					temp = it->res;
+					nx = it->x;
+					ny = it->y;
+				}
+			}
+		}
+
+		nextX = nx;
+		nextY = ny;
+
+	}
 	
 
 
@@ -89,41 +112,40 @@ int main()
 void FindDisT(int nX, int nY, int lX, int lY)
 {
 	if (nX < 0 || nY < 0) return;
-	if (arr[0][nX][nY] == 99) return;
+	if (arr[nX][nY].find == 99) return;
 
-	arr[0][nX][nY] = 10;
+	arr[nX][nY].move = 10;
 	int res = 0;
 	int resX = lX - nX;
 	int resY = lY - nY;
 	if (resX >= resY)
 	{
-		res = resY * 14 + (resY - resX) * 10;
+		res = resY * 14 + (resX - resY) * 10;
 	}
-	else res = resX * 14 + (resX - resY) * 10;
-	arr[1][nX][nY] = res;
-	arr[2][nX][nY] = arr[0][nX][nY] + arr[1][nX][nY];
+	else res = resX * 14 + (resY - resX) * 10;
+	arr[nX][nY].Mdis = res;
+	arr[nX][nY].res = arr[nX][nY].move + arr[nX][nY].Mdis;
 	
-	qb.push({ arr[0][nX][nY], arr[1][nX][nY], arr[2][nX][nY] });
-
-
+	lb.push_back(arr[nX][nY]);
 
 }
 void FindDisX(int nX, int nY, int lX, int lY)
 {
 	if (nX < 0 || nY < 0) return;
-	if (arr[0][nX][nY] == 99) return;
-	arr[0][nX][nY] = 14;
+	if (arr[nX][nY].find == 99) return;
+
+	arr[nX][nY].move = 14;
 	int res = 0;
 	int resX = lX - nX;
 	int resY = lY - nY;
 	if (resX >= resY)
 	{
-		res = resY * 14 + (resY - resX) * 10;
+		res = resY * 14 + (resX - resY) * 10;
 	}
-	else res = resX * 14 + (resX - resY) * 10;
-	arr[1][nX][nY] = res;
-	arr[2][nX][nY] = arr[0][nX][nY] + arr[1][nX][nY];
+	else res = resX * 14 + (resY - resX) * 10;
+	arr[nX][nY].Mdis = res;
+	arr[nX][nY].res = arr[nX][nY].move + arr[nX][nY].Mdis;
 
-	qb.push({ arr[0][nX][nY], arr[1][nX][nY], arr[2][nX][nY] });
+	lb.push_back(arr[nX][nY]);
 
 }
