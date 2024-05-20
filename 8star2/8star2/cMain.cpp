@@ -1,4 +1,4 @@
-#include "Star.h"
+#include "Star.h";
 
 int main()
 {
@@ -9,33 +9,42 @@ int main()
 	int nextY = startY;
 	int lastX = 8;
 	int lastY = 5;
-	int disX = 0;
-	int disY = 0;
 
-	st.arr[1][1].find = 1;
-
-	while (nextX != lastX && nextY != lastY)
+	st.Init(startX, startY);
+	
+	for (int i = 2; i <= 6; i++)
 	{
-		cout << "X = " << nextX << endl;
-		cout << "Y = " << nextY << endl;
-		st.FindDisT(nextX + 1, nextY, lastX, lastY);
-		st.FindDisX(nextX + 1, nextY + 1, lastX, lastY);
-		st.FindDisT(nextX, nextY + 1, lastX, lastY);
-		st.FindDisX(nextX - 1, nextY + 1, lastX, lastY);
-		st.FindDisT(nextX - 1, nextY, lastX, lastY);
-		st.FindDisX(nextX - 1, nextY - 1, lastX, lastY);
-		st.FindDisT(nextX, nextY - 1, lastX, lastY);
-		st.FindDisX(nextX + 1, nextY - 1, lastX, lastY);
+		st.Hole(i,3);
+	}
+
+
+
+	
+
+	while (nextX != lastX || nextY != lastY)
+	{
+		Node cNode = st.arr[nextY][nextX];
+
+		st.FindDisT(nextX + 1, nextY, lastX, lastY, cNode);
+		st.FindDisX(nextX + 1, nextY + 1, lastX, lastY, cNode);
+		st.FindDisT(nextX, nextY + 1, lastX, lastY, cNode);
+		st.FindDisX(nextX - 1, nextY + 1, lastX, lastY, cNode);
+		st.FindDisT(nextX - 1, nextY, lastX, lastY, cNode);
+		st.FindDisX(nextX - 1, nextY - 1, lastX, lastY, cNode);
+		st.FindDisT(nextX, nextY - 1, lastX, lastY, cNode);
+		st.FindDisX(nextX + 1, nextY - 1, lastX, lastY, cNode);
 
 		list<Node>::iterator it = st.lb.begin();
 		int temp = INT32_MAX;
 		int nx = nextX;
 		int ny = nextY;
-		cout << "size = " << st.lb.size() << endl;
 		for (int i = 0; i < st.lb.size(); i++)
 		{
-			cout << it->res << endl;
-			if (st.arr[it->y][it->x].find == 1) continue;
+			if (st.arr[it->y][it->x].find == 1)
+			{
+				it++;
+				continue;
+			}
 			if (temp > it->res)
 			{
 				temp = it->res;
@@ -57,6 +66,15 @@ int main()
 		nextY = ny;
 		st.arr[ny][nx].find = 1;
 	}
-	
+
+
+	Node cNode = st.arr[nextY][nextX];
+	cout << "°æ·Î" <<  endl << cNode.x << " , " << cNode.y << endl;
+	while (cNode.parent != nullptr)
+	{
+		cout << cNode.parent->x << " , " << cNode.parent->y << endl;
+		cNode = *cNode.parent;
+		
+	}
 
 }

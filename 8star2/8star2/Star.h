@@ -15,7 +15,6 @@ struct Node
 	int res;
 	
 	Node* parent;
-	Node* child[8];
 };
 class Star
 {
@@ -24,8 +23,10 @@ public:
 	list<Node> lb;
 
 public:
-	void FindDisT(int nX, int nY, int lX, int lY);
-	void FindDisX(int nX, int nY, int lX, int lY);
+	void Init(int x, int y);
+	void Hole(int x, int y);
+	void FindDisT(int nX, int nY, int lX, int lY , Node cNode);
+	void FindDisX(int nX, int nY, int lX, int lY, Node cNode);
 	Star();
 	~Star();
 };
