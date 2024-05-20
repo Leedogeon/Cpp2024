@@ -17,10 +17,6 @@ int main()
 		st.Hole(i,3);
 	}
 
-
-
-	
-
 	while (nextX != lastX || nextY != lastY)
 	{
 		Node cNode = st.arr[nextY][nextX];
@@ -77,4 +73,15 @@ int main()
 		
 	}
 
+	for (int i = MaxY-1; i >= 0; i--)
+	{
+		for (int j = 0; j < MaxX; j++)
+		{
+			if (st.arr[i][j].find == 1) cout << "б┌";
+			else if (st.arr[i][j].find == 2) cout << "б┘";
+			else if (st.arr[i][j].find == 99) cout << "бс";
+			else if (st.arr[i][j].find == 0) cout << "бр";
+		}
+		cout << endl;
+	}
 }
