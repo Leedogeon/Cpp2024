@@ -1,28 +1,18 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
 
-struct Node
-{
-	int x;
-	Node* parent;
-};
-Node arr[3][3] = {};
-void test(Node *cNode);
-int main()
-{
-	Node cNode = arr[0][0];
-	cNode.x = 1;
+int main() {
+    char item[10];
 
-	test(&cNode);
+    int no = 1;
+    switch (no)
+    {
+    case 1:
+        
+        break;
+    case 2:
+        break;
+    }
 
 
-	cout << &cNode << endl;
-
-
-}
-void test(Node *cNode)
-{
-	cout << cNode << endl;
-	arr[0][1].parent = cNode;
-
+    return 0;
 }
