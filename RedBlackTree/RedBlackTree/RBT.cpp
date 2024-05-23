@@ -56,6 +56,10 @@ void RBT::Change(Node* nNode)
 	{
 
 	}
+	else
+	{
+
+	}
 }
 
 
