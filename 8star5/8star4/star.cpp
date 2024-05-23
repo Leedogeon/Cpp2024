@@ -6,14 +6,11 @@ void star::Start(Node* sNode)
     {
         for (int j = 0; j < MaxX; j++)
         {
-            arr[i][j] = NewNode(i,j);
+            arr[i][j]->x = j;
+            arr[i][j]->y = i;
         }
     }
-
     sNode->find = 1;
-
-
-    
 }
 
 void star::End(Node* fNode)
@@ -21,13 +18,6 @@ void star::End(Node* fNode)
     fNode->find = 3;
 }
 
-Node* star::NewNode(int y, int x)
-{
-    Node* nNode = arr[y][x];
-    nNode->x = x;
-    nNode->y = y;
-    return nNode;
-}
 
 void star::Hole(Node* xNode)
 {
@@ -105,6 +95,13 @@ void star::eStart(Node* esNode)
 
 star::star()
 {
+    for (int i = 0; i < MaxY; i++)
+    {
+        for (int j = 0; j < MaxX; j++)
+        {
+            arr[i][j] = new Node(0, 0, 0, 0, 0, 0, nullptr);
+        }
+    }
 }
 
 star::~star()

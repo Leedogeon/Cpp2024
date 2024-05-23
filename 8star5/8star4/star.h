@@ -14,6 +14,10 @@ struct Node
 	int res;
 	int find;
 	Node* parent;
+
+	Node(int _x, int _y, int _dis, int _move, int _res, int _find, Node* _parent)
+		: x(_x), y(_y), dis(_dis), move(_move), res(_res), find(_find), parent(_parent) {}
+
 };
 
 struct COM
@@ -35,7 +39,6 @@ public:
 public:
 	void Start(Node* sNode);
 	void End(Node* fNode);
-	Node* NewNode(int y, int x);
 	void Hole(Node* xNode);
 	Node* FindDis(Node* nNode, Node* fNode);
 	
