@@ -7,7 +7,7 @@ void RBT::AddNode(int data)
 	if (rootNode == nullptr)
 	{
 		rootNode = nNode;
-		nNode->RB = true;
+		case1(nNode);
 		return;
 	}
 	FindPlace(nNode, rootNode);
@@ -52,15 +52,13 @@ bool RBT::BigLess(Node* nNode, Node* parent)
 
 void RBT::Change(Node* nNode)
 {
-	if (uncle(nNode)->RB == true)
-	{
-
-	}
-	else
-	{
-
-	}
+	case2(nNode);
+	
+	
 }
+
+
+
 
 
 Node* RBT::createNode(int data)
@@ -68,6 +66,69 @@ Node* RBT::createNode(int data)
 	Node* nNode = new Node(data,false,nullptr,nullptr,nullptr);
 	return nNode;
 }
+
+void case1(struct Node* n)
+{
+	if (n->parent == nullptr)
+		n->RB = true;
+
+	return;
+}
+void case2(struct Node* n)
+{
+	if (n->parent->RB = true)
+		return;
+	
+	case3(n);
+}
+void case3(struct Node* n)
+{
+	//n->parent->RB == false;
+	Node* uc = uncle(n);
+	Node* pr = n->parent;
+	Node* gr = grand(n);
+	if (uc != nullptr && uc->RB == false)
+	{
+		!uc->RB;
+		!pr->RB;
+		!gr->RB;
+		case1(gr);
+	}
+	else
+	{
+		case4(n);
+	}
+
+}
+void case4(struct Node* n)
+{
+	//n->parent->RB == false;
+	//uc.RB == true;
+	Node* pr = n->parent;
+	Node* gr = grand(n);
+
+	if (n = pr->rightChid && pr = gr->leftChild)
+	{
+		gr->leftChild = n;
+		n->leftChild = pr;
+	}
+	else if (n = pr->leftChild && pr = gr->rightChid)
+	{
+		gr->rightChid = n;
+		n->rightChid = pr;
+	}
+	case5(pr);
+}
+void case5(struct Node* n)
+{
+	Node* pr = n->parent;
+	Node* gr = grand(n);
+	
+
+
+}
+
+
 
 RBT::RBT()
 {

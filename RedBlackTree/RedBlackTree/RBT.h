@@ -8,7 +8,7 @@ struct Node
 	Node* rightChid;
 
 	Node(int _data, bool _RB, Node* _parent, Node* _leftChild, Node* rightChild)
-		:data(_data), RB(true), parent(nullptr), leftChild(nullptr), rightChid(nullptr) {}
+		:data(_data), RB(false), parent(nullptr), leftChild(nullptr), rightChid(nullptr) {}
 };
 
 struct Node* grand(struct Node *n)
@@ -40,6 +40,14 @@ public:
 	void Change(Node* nNode);
 private:
 	Node* createNode(int data);
+	void case1(struct Node* n);
+	void case2(struct Node* n);
+	void case3(struct Node* n);
+	void case4(struct Node* n);
+	void case5(struct Node* n);
+
+
+
 public:
 	RBT();
 	~RBT();
