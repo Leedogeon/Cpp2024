@@ -7,16 +7,13 @@ void RBT::AddNode(int data)
 	if (rootNode == nullptr)
 	{
 		rootNode = nNode;
-		case1(nNode);
+		insert_case1(nNode);
 		return;
 	}
 	FindPlace(nNode, rootNode);
-
-
-	Change(nNode);
+	insert_case2(nNode);
 
 }
-
 void RBT::FindPlace(Node* nNode, Node* parent)
 {
 	if (BigLess(nNode, parent))
@@ -33,11 +30,11 @@ void RBT::FindPlace(Node* nNode, Node* parent)
 	}
 	else
 	{
-		if (parent->rightChid == nullptr) 
+		if (parent->rightChid == nullptr)
 		{
 			parent->rightChid = nNode;
 			nNode->parent = parent;
-			
+
 			return;
 		}
 		FindPlace(nNode, parent->rightChid);
@@ -50,89 +47,162 @@ bool RBT::BigLess(Node* nNode, Node* parent)
 	return false;
 }
 
-void RBT::Change(Node* nNode)
+void RBT::Print(Node* nNode)
 {
-	case2(nNode);
+	cout << nNode->data << " -> ";
+
+	if (nNode->leftChild != nullptr) Print(nNode->leftChild);
 	
-	
+	if (nNode->rightChid != nullptr)Print(nNode->rightChid);
+
 }
 
+void RBT::ROB(Node* nNode)
+{
+	cout << nNode->RB << " -> ";
 
+	if (nNode->leftChild != nullptr) ROB(nNode->leftChild);
 
-
+	if (nNode->rightChid != nullptr)ROB(nNode->rightChid);
+}
 
 Node* RBT::createNode(int data)
 {
-	Node* nNode = new Node(data,false,nullptr,nullptr,nullptr);
+	Node* nNode = new Node(data, false, nullptr, nullptr, nullptr);
 	return nNode;
 }
 
-void case1(struct Node* n)
+#pragma region grand,uncle
+Node* RBT::grand(Node* n)
 {
-	if (n->parent == nullptr)
+	if (n->parent != nullptr && n != nullptr)
+	{
+		return n->parent->parent;
+	}
+	return nullptr;
+}
+
+Node* RBT::uncle(Node* n)
+{
+	Node* gr = grand(n);
+	if (gr != nullptr)
+	{
+		if (gr->leftChild == n->parent) return gr->rightChid;
+		else return gr->leftChild;
+	}
+	return nullptr;
+}
+
+#pragma endregion
+#pragma region rotate
+void RBT::rotate_left(Node* n)
+{
+	Node* c = n->rightChid;
+	Node* p = n->parent;
+
+	if (c->leftChild != NULL)
+		c->leftChild->parent = n;
+
+	n->rightChid = c->leftChild;
+	n->parent = c;
+	c->leftChild = n;
+	c->parent = p;
+
+	if (p != NULL) {
+		if (p->leftChild == n)
+			p->leftChild = c;
+		else
+			p->rightChid = c;
+	}
+	if (p == NULL) rootNode = c;
+}
+void RBT::rotate_Right(Node* n)
+{
+	Node* c = n->leftChild;
+	Node* p = n->parent;
+
+	if (c->rightChid != NULL)
+		c->rightChid->parent = n;
+
+	n->leftChild = c->rightChid;
+	n->parent = c;
+	c->rightChid = n;
+	c->parent = p;
+
+	if (p != NULL) {
+		if (p->rightChid == n)
+			p->rightChid = c;
+		else
+			p->leftChild = c;
+	}
+
+	if (p == NULL) rootNode = c;
+
+}
+
+#pragma endregion
+#pragma region case
+void RBT::insert_case1(Node* n)
+{
+
+	if (n->parent == NULL)
 		n->RB = true;
-
-	return;
-}
-void case2(struct Node* n)
-{
-	if (n->parent->RB = true)
-		return;
-	
-	case3(n);
-}
-void case3(struct Node* n)
-{
-	//n->parent->RB == false;
-	Node* uc = uncle(n);
-	Node* pr = n->parent;
-	Node* gr = grand(n);
-	if (uc != nullptr && uc->RB == false)
-	{
-		!uc->RB;
-		!pr->RB;
-		!gr->RB;
-		case1(gr);
-	}
 	else
-	{
-		case4(n);
-	}
-
+		insert_case2(n);
 }
-void case4(struct Node* n)
+void RBT::insert_case2(Node* n)
 {
-	//n->parent->RB == false;
-	//uc.RB == true;
-	Node* pr = n->parent;
-	Node* gr = grand(n);
-
-	if (n = pr->rightChid && pr = gr->leftChild)
-	{
-		gr->leftChild = n;
-		n->leftChild = pr;
-	}
-	else if (n = pr->leftChild && pr = gr->rightChid)
-	{
-		gr->rightChid = n;
-		n->rightChid = pr;
-	}
-	case5(pr);
+	if (n->parent->RB == true)
+		return; /* Tree is still valid */
+	else
+		insert_case3(n);
 }
-void case5(struct Node* n)
+void RBT::insert_case3(Node* n)
 {
-	Node* pr = n->parent;
-	Node* gr = grand(n);
-	
+	Node* u = uncle(n), * g;
 
-
+	if ((u != NULL) && (u->RB == false)) {
+		n->parent->RB = true;
+		u->RB = true;
+		g = grand(n);
+		g->RB = false;
+		insert_case1(g);
+	}
+	else {
+		insert_case4(n);
+	}
 }
+void RBT::insert_case4(Node* n)
+{
+	Node* g = grand(n);
 
+	if ((n == n->parent->rightChid) && (n->parent == g->leftChild)) {
+		rotate_left(n->parent);
+		
+		n = n->leftChild;
+	}
+	else if ((n == n->parent->leftChild) && (n->parent == g->rightChid)) {
+		rotate_Right(n->parent);
+		n = n->rightChid;
+	}
+	insert_case5(n);
+}
+void RBT::insert_case5(Node* n)
+{
+	Node* g = grand(n);
+
+	n->parent->RB = true;
+	g->RB = false;
+	if (n == n->parent->leftChild)
+		rotate_Right(g);
+	else
+		rotate_left(g);
+}
+#pragma endregion
 
 
 RBT::RBT()
 {
-	rootNode = nullptr;
 }
 
 RBT::~RBT()
