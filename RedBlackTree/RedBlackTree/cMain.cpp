@@ -14,9 +14,16 @@ int main()
     rbt.AddNode(40);
     rbt.AddNode(25);
     rbt.AddNode(18);
+    rbt.AddNode(17);
+    rbt.AddNode(13);
+
+
 
     rbt.Print(rbt.rootNode);
     cout << endl;
-    rbt.ROB(rbt.rootNode);
+
+    cout << endl;
+    rbt.Remove(3);
+    rbt.Print(rbt.rootNode);
 
 }
