@@ -3,8 +3,8 @@
 void RBT::AddNode(int data)
 {
 	Node* nNode = createNode(data);
-	nNode->RB = false;
-	if (rootNode == nullptr)
+
+	if (rootNode == nil)
 	{
 		rootNode = nNode;
 		insert_case1(nNode);
@@ -12,13 +12,19 @@ void RBT::AddNode(int data)
 	}
 	FindPlace(nNode, rootNode);
 	insert_case2(nNode);
+}
+void RBT::Find(Node* root, int data)
+{
+	if (root->data == data) cout << "root = " << root->RB << endl;
+	if (root->data > data) Find(root->leftChild, data);
+	if (root->data < data) Find(root->rightChild, data);
 
 }
 void RBT::FindPlace(Node* nNode, Node* parent)
 {
 	if (BigLess(nNode, parent))
 	{
-		if (parent->leftChild == nullptr)
+		if (parent->leftChild == nil)
 		{
 			parent->leftChild = nNode;
 			nNode->parent = parent;
@@ -30,7 +36,7 @@ void RBT::FindPlace(Node* nNode, Node* parent)
 	}
 	else
 	{
-		if (parent->rightChild == nullptr)
+		if (parent->rightChild == nil)
 		{
 			parent->rightChild = nNode;
 			nNode->parent = parent;
@@ -51,9 +57,8 @@ void RBT::Print(Node* nNode)
 {
 	cout << nNode->data << " -> ";
 
-	if (nNode->leftChild != nullptr) Print(nNode->leftChild);
-
-	if (nNode->rightChild != nullptr)Print(nNode->rightChild);
+	if (nNode->leftChild != nil) Print(nNode->leftChild);
+	if (nNode->rightChild != nil) Print(nNode->rightChild);
 
 }
 
@@ -70,7 +75,12 @@ void RBT::Remove(int data)
 {
 	Node* rNode = RemoveSearch(data, rootNode);
 
-	deleteChild(rNode);
+	if (rNode->parent == nullptr)
+	{
+		free(rNode);
+		rootNode = nil;
+	}
+	else deleteChild(rNode);
 }
 
 Node* RBT::RemoveSearch(int data, Node* cNode)
@@ -86,11 +96,16 @@ Node* RBT::RemoveSearch(int data, Node* cNode)
 
 Node* RBT::createNode(int data)
 {
-	Node* nNode = new Node(data, false, nullptr, nullptr, nullptr);
+	Node* nNode = new Node;
+	nNode->data = data;
+	nNode->RB = false;
+	nNode->leftChild = nil;
+	nNode->rightChild = nil;
+	nNode->parent = nullptr;
 	return nNode;
 }
 
-#pragma region grand,uncle
+#pragma region grand,uncle,sibling
 Node* RBT::grand(Node* n)
 {
 	if (n->parent != nullptr && n != nullptr)
@@ -121,13 +136,6 @@ Node* RBT::sibling(Node* n)
 	return nullptr;
 }
 
-Node* RBT::LEAF(Node* n)
-{
-	if (n->leftChild == nullptr && n->rightChild == nullptr)
-		return n;
-	else return nullptr;
-}
-
 #pragma endregion
 #pragma region rotate
 void RBT::rotate_left(Node* n)
@@ -135,7 +143,7 @@ void RBT::rotate_left(Node* n)
 	Node* c = n->rightChild;
 	Node* p = n->parent;
 
-	if (c->leftChild != NULL)
+	if (c->leftChild != nullptr)
 		c->leftChild->parent = n;
 
 	n->rightChild = c->leftChild;
@@ -143,20 +151,22 @@ void RBT::rotate_left(Node* n)
 	c->leftChild = n;
 	c->parent = p;
 
-	if (p != NULL) {
+	if (p != nullptr) {
 		if (p->leftChild == n)
 			p->leftChild = c;
 		else
 			p->rightChild = c;
+
+		c->RB = false;
 	}
-	if (p == NULL) rootNode = c;
+	if (p == nullptr) rootNode = c;
 }
 void RBT::rotate_Right(Node* n)
 {
 	Node* c = n->leftChild;
 	Node* p = n->parent;
 
-	if (c->rightChild != NULL)
+	if (c->rightChild != nullptr)
 		c->rightChild->parent = n;
 
 	n->leftChild = c->rightChild;
@@ -164,14 +174,14 @@ void RBT::rotate_Right(Node* n)
 	c->rightChild = n;
 	c->parent = p;
 
-	if (p != NULL) {
+	if (p != nullptr) {
 		if (p->rightChild == n)
 			p->rightChild = c;
 		else
 			p->leftChild = c;
 	}
 
-	if (p == NULL) rootNode = c;
+	if (p == nullptr) rootNode = c;
 
 }
 
@@ -179,8 +189,7 @@ void RBT::rotate_Right(Node* n)
 #pragma region insert
 void RBT::insert_case1(Node* n)
 {
-
-	if (n->parent == NULL)
+	if (n->parent == nullptr)
 		n->RB = true;
 	else
 		insert_case2(n);
@@ -188,7 +197,7 @@ void RBT::insert_case1(Node* n)
 void RBT::insert_case2(Node* n)
 {
 	if (n->parent->RB == true)
-		return; /* Tree is still valid */
+		return;
 	else
 		insert_case3(n);
 }
@@ -196,7 +205,7 @@ void RBT::insert_case3(Node* n)
 {
 	Node* u = uncle(n), * g;
 
-	if ((u != NULL) && (u->RB == false)) {
+	if ((u != nullptr) && (u->RB == false)) {
 		n->parent->RB = true;
 		u->RB = true;
 		g = grand(n);
@@ -235,14 +244,12 @@ void RBT::insert_case5(Node* n)
 }
 
 
-
-
-
 #pragma endregion
 
 void RBT::replace(Node* n, Node* child)
 {
 	child->parent = n->parent;
+
 	if (n->parent->leftChild == n)
 		n->parent->leftChild = child;
 	else n->parent->rightChild = child;
@@ -252,6 +259,7 @@ void RBT::deleteChild(Node* n)
 {
 	Node* child = isLeaf(n->rightChild) ? n->leftChild : n->rightChild;
 	replace(n, child);
+
 	if (n->RB = true)
 	{
 		if (child->RB = false)
@@ -261,33 +269,29 @@ void RBT::deleteChild(Node* n)
 	free(n);
 }
 
-bool RBT::isLeaf(Node* n)
+int RBT::isLeaf(Node* n)
 {
-	if (LEAF(n)) return true;
-	else return false;
+	return (n == nil) ? 1 : 0;
 }
 #pragma region delete
 void RBT::delete_case1(Node* n)
 {
 	if (n->parent != nullptr)
 		delete_case2(n);
-
 }
 
 void RBT::delete_case2(Node* n)
 {
 	Node* s = sibling(n);
-
 	if (s->RB == false)
 	{
-		n->parent->RB = false;
 		s->RB = true;
 		if (n == n->parent->leftChild)
 			rotate_left(n->parent);
 		else rotate_Right(n->parent);
+	
 	}
-
-	delete_case3(n);
+	else delete_case3(n);
 }
 
 void RBT::delete_case3(Node* n)
@@ -342,7 +346,7 @@ void RBT::delete_case5(Node* n)
 			rotate_left(s);
 		}
 	}
-	delete_case6(n);
+	else delete_case6(n);
 }
 
 void RBT::delete_case6(Node* n)
@@ -366,9 +370,18 @@ void RBT::delete_case6(Node* n)
 
 RBT::RBT()
 {
-	rootNode = nullptr;
+	nil = new Node{ 0,true,nullptr,nullptr,nullptr };
+
+	rootNode = nil;
+
 }
 
 RBT::~RBT()
 {
+	while (rootNode != nil)
+	{
+		Remove(rootNode->data);
+	}
+	
+	delete nil;
 }
