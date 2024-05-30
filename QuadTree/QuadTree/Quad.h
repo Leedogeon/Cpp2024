@@ -11,7 +11,8 @@ struct XY
 	int x;
 	int y;
 	int data;
-	XY(int _x, int _y,int _data) : x(_x), y(_y),data(_data) {};
+	bool check;
+	XY(int _x, int _y,int _data,bool _check) : x(_x), y(_y),data(_data),check(false) {};
 	
 };
 

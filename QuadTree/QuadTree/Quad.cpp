@@ -18,13 +18,15 @@ void Quad::FindAll()
 
 void Quad::PrintAll(Node* cNode)
 {
-	list<XY*>::iterator iter = cNode->data.begin();
-
+	
 	for (auto num: cNode->data)
 	{
 		cout << num->data << endl;
 	}
 	cout << endl;
+
+	if(cNode->UL!= nullptr)
+	PrintAll(cNode->UL);
 }
 
 
@@ -36,16 +38,16 @@ Node* Quad::createNode(Node* parent)
 
 void Quad::FindData(Node* nNode,int Mx, int My, int Lx, int Ly)
 {
-	cout << "MX = " << Mx << endl;
+	/*cout << "MX = " << Mx << endl;
 	cout << "LX = " << Lx << endl;
 	cout << "MY = " << My << endl;
-	cout << "LY = " << Ly << endl;
+	cout << "LY = " << Ly << endl;*/
 
 
 	FindUL(nNode,Mx,My,Lx,Ly);
 	FindUR(nNode, Mx, My, Lx, Ly);
-	FindDL(nNode, Mx, My, Lx, Ly);
-	FindDR(nNode, Mx, My, Lx, Ly);
+	//FindDL(nNode, Mx, My, Lx, Ly);
+	//FindDR(nNode, Mx, My, Lx, Ly);
 }
 
 void Quad::FindUL(Node* nNode, int Mx, int My, int Lx, int Ly)
@@ -66,10 +68,12 @@ void Quad::FindUL(Node* nNode, int Mx, int My, int Lx, int Ly)
 
 void Quad::FindUR(Node* nNode, int Mx, int My, int Lx, int Ly)
 {
-	cout << "UR" << endl;
-	int x1 = Lx + (Mx - Lx) / 2;
+
+	//cout << "UR" << endl;
+
+	int x1 = Mx - (Mx - Lx) / 2;
 	int y1 = My - (My - Ly) / 2;
-	int x2 = Lx + (Mx - x1) / 2;
+	int x2 = Mx - (Mx - x1) / 2;
 	int y2 = My - (My - y1) / 2;
 
 	Node* next = createNode(nNode);
@@ -116,36 +120,40 @@ void Quad::insertData(Node* next, int Mx, int My, int Lx, int Ly, int x2, int y2
 	int resY = My - (My - Lx) / 2;
 	if (resX == 1)
 	{
-		if (arr[y2][x2]->data != 0)
+		if (arr[y2][x2]->data != 0 && arr[y2][x2]->check == false)
 		{
-			cout << arr[y2][x2]->data << endl;
+			//cout << "t" << endl;
+			//cout << arr[y2][x2]->data << endl;
 			next->parent->data.push_back(arr[y2][x2]);
+			arr[y2][x2]->check = true;
 			delete(next);
 		}
-		cout << "t" << endl;
 		return;
 	}
 
 
 	for (int i = Ly; i < My; i++)
 	{
+		if (arr[i][x2]->check == true) continue;
 		if (arr[i][x2]->data != 0)
 		{
-			cout << "x = " << x2 << endl;
-			cout << "y = " << i << endl;
-			cout << "data = " << arr[i][x2]->data << endl;
+			//cout << "x = " << x2 << endl;
+			//cout << "y = " << i << endl;
+			//cout << "data = " << arr[i][x2]->data << endl;
 			next->parent->data.push_back(arr[i][x2]);
-
+			arr[i][x2]->check = true;
 		}
 	}
 	for (int j = Lx; j < Mx; j++)
 	{
+		if (arr[y2][j]->check == true) continue;
 		if (arr[y2][j]->data != 0)
 		{
-			cout << "x = " << j << endl;
-			cout << "y = " << y2 << endl;
-			cout << "data = " << arr[y2][j]->data << endl;
+			//cout << "x = " << j << endl;
+			//cout << "y = " << y2 << endl;
+			//cout << "data = " << arr[y2][j]->data << endl;
 			next->parent->data.push_back(arr[y2][j]);
+			arr[y2][j]->check = true;
 
 		}
 	}
@@ -159,7 +167,7 @@ Quad::Quad()
 	{
 		for (int j = 0; j < MaxX; j++)
 		{
-			arr[i][j] = new XY(j, i,0);
+			arr[i][j] = new XY(j, i, 0 , false);
 		}
 	}
 	rootNode = nullptr;
