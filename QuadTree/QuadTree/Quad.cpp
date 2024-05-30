@@ -41,6 +41,29 @@ Node* Quad::createNode(Node* parent)
 
 void Quad::FindData(Node* nNode,int Mx, int My, int Lx, int Ly)
 {
+	if (nNode == rootNode)
+	{
+		for (int i = 0; i < MaxY; i++)
+		{
+			if (arr[i][MaxX / 2]->data != 0)
+			{
+				rootNode->data.push_back(arr[i][MaxX / 2]);
+				arr[i][MaxX / 2]->check = true;
+			}
+		}
+		for (int j = 0; j < MaxX; j++)
+		{
+			if (arr[MaxY / 2][j]->check == true) continue;
+			if (arr[MaxY/2][j]->data != 0)
+			{
+				rootNode->data.push_back(arr[MaxY / 2][j]);
+				arr[MaxY / 2][j]->check = true;
+			}
+		}
+
+	}
+
+
 	FindUL(nNode,Mx,My,Lx,Ly);
 	FindUR(nNode, Mx, My, Lx, Ly);
 	FindDL(nNode, Mx, My, Lx, Ly);
@@ -111,8 +134,6 @@ void Quad::FindDR(Node* nNode, int Mx, int My, int Lx, int Ly)
 
 void Quad::insertData(Node* next, int Mx, int My, int Lx, int Ly, int x2, int y2)
 {
-
-
 	int resX = x2 - Lx;
 	int resY = y2 - Ly;
 	if (resX == 1 || resY == 1)

@@ -11,6 +11,7 @@ int main()
 	qd->AddData(1, 255, 111);
 	qd->AddData(2, 254, 121);
 	qd->AddData(2, 255, 127);
+	qd->AddData(128, 128, 128);
 
 	qd->FindAll();
 	qd->PrintAll(qd->rootNode);
