@@ -14,4 +14,5 @@ int main()
 
 	qd->FindAll();
 	qd->PrintAll(qd->rootNode);
+
 }

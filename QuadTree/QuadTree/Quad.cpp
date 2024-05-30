@@ -3,7 +3,7 @@
 void Quad::AddData(int x, int y, int data)
 {
 	arr[y][x]->x = x;
-	arr[y][x]->x = y;
+	arr[y][x]->y = y;
 	arr[y][x]->data = data;
 
 }
@@ -20,10 +20,10 @@ void Quad::PrintAll(Node* cNode)
 {
 	for (auto num: cNode->data)
 	{
-		cout << num->data << endl;
+		cout << "x = " << num->x << ", y = " << num->y << ", data = " << num->data << endl;
 	}
 	if(cNode->UL!= nullptr)
-	PrintAll(cNode->UL);
+		PrintAll(cNode->UL);
 	if (cNode->UR != nullptr)
 		PrintAll(cNode->UR);
 	if (cNode->DL != nullptr)
@@ -41,9 +41,6 @@ Node* Quad::createNode(Node* parent)
 
 void Quad::FindData(Node* nNode,int Mx, int My, int Lx, int Ly)
 {
-	
-
-
 	FindUL(nNode,Mx,My,Lx,Ly);
 	FindUR(nNode, Mx, My, Lx, Ly);
 	FindDL(nNode, Mx, My, Lx, Ly);
