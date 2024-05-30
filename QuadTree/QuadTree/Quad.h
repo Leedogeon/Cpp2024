@@ -17,14 +17,15 @@ struct XY
 
 struct Node
 {
-	list<XY*> data[MaxX / 4] = {};
+	list<XY*> data;
 	Node* parent;
 	Node* UL;
 	Node* UR;
 	Node* DL;
 	Node* DR;
 
-	Node(Node* _parent,Node* _UL, Node* _UR, Node* _DL, Node* _DR) : parent(nullptr),UL(nullptr), UR(nullptr), DL(nullptr), DR(nullptr) {};
+	//Node(Node* _parent,Node* _UL, Node* _UR, Node* _DL, Node* _DR) : parent(nullptr),UL(nullptr), UR(nullptr), DL(nullptr), DR(nullptr) {};
+	Node(Node* _parent) : parent(_parent), UL(nullptr), UR(nullptr), DL(nullptr), DR(nullptr) {};
 };
 
 
@@ -36,14 +37,16 @@ public:
 
 	void AddData(int x, int y, int data);
 	void FindAll();
+	void PrintAll(Node* cNode);
 private:
-	Node* createNode();
+	Node* createNode(Node* parent);
 
 	void FindData(Node* nNode, int Mx, int My, int Lx, int Ly);
 	void FindUL(Node* nNode, int Mx,int My, int Lx,int Ly);
 	void FindUR(Node* nNode, int Mx, int My, int Lx, int Ly);
 	void FindDL(Node* nNode, int Mx, int My, int Lx, int Ly);
 	void FindDR(Node* nNode, int Mx, int My, int Lx, int Ly);
+	void insertData(Node* next, int Mx, int My, int Lx, int Ly, int x2,int y2);
 
 public:
 	Quad();

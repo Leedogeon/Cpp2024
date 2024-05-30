@@ -1,18 +1,27 @@
-#include <stdio.h>
+#pragma once
+#include <iostream>
+#include<list>
+using namespace std;
 
-int main() {
-    char item[10];
+#define MaxX 256
+#define MaxY 256
 
-    int no = 1;
-    switch (no)
-    {
-    case 1:
-        
-        break;
-    case 2:
-        break;
-    }
+struct XY
+{
+	int x;
+	int y;
+	int data;
+	XY(int _x, int _y, int _data) : x(_x), y(_y), data(_data) {};
+
+};
 
 
-    return 0;
+int main()
+{
+	list<XY*> data;
+	XY* a = new XY(1,2,3);
+	data.push_back(a);
+
+	cout << data.front()->data<< endl;
+	
 }
