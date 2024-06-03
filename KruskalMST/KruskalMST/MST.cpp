@@ -174,6 +174,7 @@ void MST::BreadthFirstSerch()
 				gr[j]->data.push_back(pFT.top().from);
 				gr[j]->data.push_back(pFT.top().to);
 				pFT.pop();
+				break;
 			}
 
 			int ckF = 0;
@@ -186,8 +187,7 @@ void MST::BreadthFirstSerch()
 
 			if (ckF == 0 && ckT == 0)
 			{
-				gr[j]->data.push_back(pFT.top().from);
-				gr[j]->data.push_back(pFT.top().to);
+				continue;
 			}
 			else if (ckF == 0 && ckT != 0)
 			{
@@ -205,7 +205,7 @@ void MST::BreadthFirstSerch()
 					else continue;
 				}
 			}
-			else if (ckF !=0 && ckT == 0)
+			else if (ckF != 0 && ckT == 0)
 			{
 				int Xck = 0;
 				for (int i = 0; i < graph[pFT.top().to][0].cnt; i++)
@@ -220,6 +220,11 @@ void MST::BreadthFirstSerch()
 					}
 					else continue;
 				}
+			}
+			else if (ckF != 0 && ckT != 0)
+			{
+				pFT.pop();
+				break;
 			}
 
 			pFT.pop();

@@ -17,6 +17,7 @@ int main()
 	dx.AddEdge(4, 6, 4);
 	dx.AddEdge(5, 6, 2);
 
+
 	for (int i = 0; i < Max; i++)
 	{
 		dx.ShowGraphEdge(i);
