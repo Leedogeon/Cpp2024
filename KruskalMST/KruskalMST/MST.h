@@ -51,7 +51,7 @@ private:
 	map<int, int> vs;
 	list<FromTo> FT;
 	priority_queue<FromTo, vector<FromTo>, COM> pFT;
-	Group* gr[(Max / 2)];
+	Group* gr[Max];
 
 public:
 	void Init(int nodeCount);

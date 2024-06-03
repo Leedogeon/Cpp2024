@@ -9,7 +9,7 @@ void MST::Init(int nodeCount)
 		graph[i] = createNode(i);
 		vertexs[i] = false;
 	}
-	for (int i = 0; i < (Max / 2); i++)
+	for (int i = 0; i < Max; i++)
 	{
 		gr[i] = new Group({});
 	}
@@ -165,18 +165,16 @@ void MST::BreadthFirstSerch()
 	}
 
 	int pSz = pFT.size();
-	for (int i = 0; i < pSz; i++)
+	while(!pFT.empty())
 	{
-		for (int j = 0; j < (Max / 2); j++)
+		for (int j = 0; j < Max; j++)
 		{
 			if (gr[j]->data.empty())
 			{
 				gr[j]->data.push_back(pFT.top().from);
 				gr[j]->data.push_back(pFT.top().to);
 				pFT.pop();
-				break;
 			}
-
 
 			int ckF = 0;
 			int ckT = 0;
@@ -207,7 +205,7 @@ void MST::BreadthFirstSerch()
 					else continue;
 				}
 			}
-			else if (ckT == 0)
+			else if (ckF !=0 && ckT == 0)
 			{
 				int Xck = 0;
 				for (int i = 0; i < graph[pFT.top().to][0].cnt; i++)
@@ -225,19 +223,23 @@ void MST::BreadthFirstSerch()
 			}
 
 			pFT.pop();
-
-
+			break;
 		}
 
 
 	}
 
-	//int pft = pFT.size();
-	//for (int i = 0; i < pft; i++)
-	//{
-	//    cout << pFT.top().pio << endl;
-	//    pFT.pop();
-	//}
+	for (int i = 0; i < Max; i++)
+	{
+		if (!gr[i]->data.empty())
+		{
+			for (auto num : gr[i]->data)
+			{
+				cout << num;
+			}
+			cout << endl;
+		}
+	}
 }
 
 Node* MST::createNode(int data)
