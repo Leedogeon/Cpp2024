@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <queue>
+#include<vector>
 #include <list>
 #include<map>
 #define Max 7
@@ -24,6 +25,22 @@ struct FromTo
 		:from(_from),to(_to),pio(_pio) {};
 
 };
+
+struct Group
+{
+	list<int> data;
+};
+
+struct COM
+{
+	bool operator()(FromTo a, FromTo b)
+	{
+		if (a.pio > b.pio)
+			return true;
+		else return false;
+	}
+};
+
 class MST
 {
 private:
@@ -33,6 +50,9 @@ private:
 	map<int, int> dis;
 	map<int, int> vs;
 	list<FromTo> FT;
+	priority_queue<FromTo, vector<FromTo>, COM> pFT;
+	Group* gr[(Max / 2)];
+
 public:
 	void Init(int nodeCount);
 	void AddEdge(int from, int to, int pio);
@@ -41,7 +61,6 @@ public:
 	void ShowGraphEdge(int node);
 private:
 	Node* createNode(int data);
-	void Breadth(int node, queue<int>& pque);
 	void change(int _base, Node* _cng);
 public:
 	MST();
