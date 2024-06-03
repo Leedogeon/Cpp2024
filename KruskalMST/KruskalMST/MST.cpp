@@ -120,10 +120,10 @@ bool MST::visitVertex(int node)
 void MST::BreadthFirstSerch()
 {
     queue<int> pque;
-    
+
     for (int i = 1; i < Max; i++)
     {
-        
+
         for (int j = 0; j < graph[i][0].cnt; j++)
         {
             int check = 0;
@@ -140,15 +140,15 @@ void MST::BreadthFirstSerch()
                     break;
                 }
             }
-            if(check == 0)
-            FT.push_back({ i, graph[i][j].next->data, graph[i][j].pio });
+            if (check == 0)
+                FT.push_back({ i, graph[i][j].next->data, graph[i][j].pio });
         }
     }
 
 
     for (auto num : FT)
     {
-        cout << "from = " << num.from  << ", to = " << num.to  << " , pio = " << num.pio << endl;
+        cout << "from = " << num.from << ", to = " << num.to << " , pio = " << num.pio << endl;
     }
 
 
@@ -259,16 +259,15 @@ MST::MST()
     count = 0;
     vertexs = nullptr;
     graph = nullptr;
-    
+
     for (int i = 0; i < Max; i++)
     {
         dis.insert({ i,0 });
         vs.insert({ i,0 });
-        
+
     }
 }
 
 MST::~MST()
 {
 }
-
