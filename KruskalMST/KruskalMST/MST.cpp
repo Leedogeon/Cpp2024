@@ -123,13 +123,37 @@ void MST::BreadthFirstSerch()
     
     for (int i = 1; i < Max; i++)
     {
+        
         for (int j = 0; j < graph[i][0].cnt; j++)
         {
-            FT.push_back({i, graph[i][j].next->data, graph[i][j].pio});
-
+            int check = 0;
+            for (auto num : FT)
+            {
+                if (num.from == i && num.to == graph[i][j].next->data)
+                {
+                    check++;
+                    break;
+                }
+                if (num.from == graph[i][j].next->data && num.to == i)
+                {
+                    check++;
+                    break;
+                }
+            }
+            if(check == 0)
+            FT.push_back({ i, graph[i][j].next->data, graph[i][j].pio });
         }
-
     }
+
+
+    for (auto num : FT)
+    {
+        cout << "from = " << num.from  << ", to = " << num.to  << " , pio = " << num.pio << endl;
+    }
+
+
+
+
 }
 
 Node* MST::createNode(int data)
