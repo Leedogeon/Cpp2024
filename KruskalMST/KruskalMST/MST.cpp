@@ -170,7 +170,6 @@ void MST::BreadthFirstSerch()
 		{
 			if (gr[i]->data.empty())
 			{
-				cout << "from = " << pFT.top().from << ", to = "  << pFT.top().to <<  ", pio = " << pFT.top().pio << endl;
 				gr[i]->data.push_back(pFT.top());
 				pFT.pop();
 
@@ -193,8 +192,6 @@ void MST::BreadthFirstSerch()
 								if (gri->to == gnum.from) tc++;
 								if (gri->to == gnum.to) tc++;
 							}
-
-							cout << "fc = " << fc << ", tc = " << tc << endl;
 
 							if (fc == 0 && tc == 0)
 							{
@@ -225,11 +222,11 @@ void MST::BreadthFirstSerch()
 	cout << "print" << endl;
 	for (int i = 0; i < Max; i++)
 	{
+		if (gr[i]->data.empty()) continue;
 		for (auto num : gr[i]->data)
 			{
 			cout << "from = " << num.from << ", to = " << num.to << ", pio = " << num.pio << endl;
 			}
-			cout << endl;
 	}
 }
 
