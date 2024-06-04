@@ -164,86 +164,72 @@ void MST::BreadthFirstSerch()
 		iter++;
 	}
 
-	int pSz = pFT.size();
 	while(!pFT.empty())
 	{
-		for (int j = 0; j < Max; j++)
+		for (int i = 0; i < Max; i++)
 		{
-			if (gr[j]->data.empty())
+			if (gr[i]->data.empty())
 			{
-				gr[j]->data.push_back(pFT.top().from);
-				gr[j]->data.push_back(pFT.top().to);
+				cout << "from = " << pFT.top().from << ", to = "  << pFT.top().to <<  ", pio = " << pFT.top().pio << endl;
+				gr[i]->data.push_back(pFT.top());
 				pFT.pop();
+
+				for (int j = 0; j < Max; j++)
+				{
+					if (gr[i]->data.empty()) break;
+					if (gr[j]->data.empty()) continue;
+
+					if (i == j) continue;
+
+					if (!gr[j]->data.empty())
+					{
+							int fc = 0;
+							int tc = 0;
+							list<FromTo>::iterator gri = gr[i]->data.begin();							
+							for (auto gnum : gr[j]->data)
+							{
+								if (gri->from == gnum.from) fc++;
+								if (gri->from == gnum.to) fc++;
+								if (gri->to == gnum.from) tc++;
+								if (gri->to == gnum.to) tc++;
+							}
+
+							cout << "fc = " << fc << ", tc = " << tc << endl;
+
+							if (fc == 0 && tc == 0)
+							{
+								gr[j]->data.push_back(gr[i]->data.front());
+
+							}
+							else if (fc != 0 && tc != 0)
+							{
+								if (gr[j]->linked == false)
+								{
+									gr[j]->data.push_back(gr[i]->data.front());
+								}
+								gr[i]->data.pop_front();
+								break;
+							}
+							else
+							{
+								gr[j]->data.push_back(gr[i]->data.front());
+								gr[j]->linked = true;
+							}
+							gr[i]->data.pop_front();
+					}
+				}
 				break;
 			}
-
-			int ckF = 0;
-			int ckT = 0;
-			for (auto num : gr[j]->data)
-			{
-				if (num == pFT.top().from) ckF++;
-				if (num == pFT.top().to) ckT++;
-			}
-
-			if (ckF == 0 && ckT == 0)
-			{
-				continue;
-			}
-			else if (ckF == 0 && ckT != 0)
-			{
-				int Xck = 0;
-				for (int i = 0; i < graph[pFT.top().from][0].cnt; i++)
-				{
-					for (auto num : gr[j]->data)
-					{
-						if (graph[pFT.top().from][i].next->data == num) Xck++;
-					}
-					if (Xck < 2)
-					{
-						gr[j]->data.push_back(pFT.top().from);
-					}
-					else continue;
-				}
-			}
-			else if (ckF != 0 && ckT == 0)
-			{
-				int Xck = 0;
-				for (int i = 0; i < graph[pFT.top().to][0].cnt; i++)
-				{
-					for (auto num : gr[j]->data)
-					{
-						if (graph[pFT.top().to][i].next->data == num) Xck++;
-					}
-					if (Xck < 2)
-					{
-						gr[j]->data.push_back(pFT.top().to);
-					}
-					else continue;
-				}
-			}
-			else if (ckF != 0 && ckT != 0)
-			{
-				pFT.pop();
-				break;
-			}
-
-			pFT.pop();
-			break;
 		}
-
-
 	}
-
+	cout << "print" << endl;
 	for (int i = 0; i < Max; i++)
 	{
-		if (!gr[i]->data.empty())
-		{
-			for (auto num : gr[i]->data)
+		for (auto num : gr[i]->data)
 			{
-				cout << num;
+			cout << "from = " << num.from << ", to = " << num.to << ", pio = " << num.pio << endl;
 			}
 			cout << endl;
-		}
 	}
 }
 

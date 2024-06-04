@@ -28,7 +28,8 @@ struct FromTo
 
 struct Group
 {
-	list<int> data;
+	list<FromTo> data;
+	bool linked = false;
 };
 
 struct COM
