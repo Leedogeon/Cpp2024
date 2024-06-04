@@ -124,8 +124,6 @@ bool MST::visitVertex(int node)
 
 void MST::BreadthFirstSerch()
 {
-	queue<int> pque;
-
 	for (int i = 1; i < Max; i++)
 	{
 
@@ -148,12 +146,6 @@ void MST::BreadthFirstSerch()
 			if (check == 0)
 				FT.push_back({ i, graph[i][j].next->data, graph[i][j].pio });
 		}
-	}
-
-
-	for (auto num : FT)
-	{
-		cout << "from = " << num.from << ", to = " << num.to << " , pio = " << num.pio << endl;
 	}
 
 	list<FromTo>::iterator iter = FT.begin();
