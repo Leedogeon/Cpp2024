@@ -126,37 +126,22 @@ void MST::BreadthFirstSerch()
 {
 	for (int i = 1; i < Max; i++)
 	{
-
 		for (int j = 0; j < graph[i][0].cnt; j++)
 		{
-			int check = 0;
 			for (auto num : FT)
 			{
-				if (num.from == i && num.to == graph[i][j].next->data)
-				{
-					check++;
-					break;
-				}
-				if (num.from == graph[i][j].next->data && num.to == i)
-				{
-					check++;
-					break;
-				}
+				if (num.from == i && num.to == graph[i][j].next->data) break;
+				if (num.from == graph[i][j].next->data && num.to == i) break;
 			}
-			if (check == 0)
-				FT.push_back({ i, graph[i][j].next->data, graph[i][j].pio });
+			FT.push_back({ i, graph[i][j].next->data, graph[i][j].pio });
 		}
 	}
-
-	list<FromTo>::iterator iter = FT.begin();
-
 	for (auto num : FT)
 	{
-		pFT.push({ iter->from,iter->to,iter->pio });
-		iter++;
+		pFT.push({ num });
 	}
 
-	while(!pFT.empty())
+	while (!pFT.empty())
 	{
 		for (int i = 0; i < Max; i++)
 		{
@@ -174,37 +159,37 @@ void MST::BreadthFirstSerch()
 
 					if (!gr[j]->data.empty())
 					{
-							int fc = 0;
-							int tc = 0;
-							list<FromTo>::iterator gri = gr[i]->data.begin();							
-							for (auto gnum : gr[j]->data)
-							{
-								if (gri->from == gnum.from) fc++;
-								if (gri->from == gnum.to) fc++;
-								if (gri->to == gnum.from) tc++;
-								if (gri->to == gnum.to) tc++;
-							}
+						int fc = 0;
+						int tc = 0;
+						list<FromTo>::iterator gri = gr[i]->data.begin();
+						for (auto gnum : gr[j]->data)
+						{
+							if (gri->from == gnum.from) fc++;
+							if (gri->from == gnum.to) fc++;
+							if (gri->to == gnum.from) tc++;
+							if (gri->to == gnum.to) tc++;
+						}
 
-							if (fc == 0 && tc == 0)
+						if (fc == 0 && tc == 0)
+						{
+							gr[j]->data.push_back(gr[i]->data.front());
+
+						}
+						else if (fc != 0 && tc != 0)
+						{
+							if (gr[j]->linked == false)
 							{
 								gr[j]->data.push_back(gr[i]->data.front());
-
-							}
-							else if (fc != 0 && tc != 0)
-							{
-								if (gr[j]->linked == false)
-								{
-									gr[j]->data.push_back(gr[i]->data.front());
-								}
-								gr[i]->data.pop_front();
-								break;
-							}
-							else
-							{
-								gr[j]->data.push_back(gr[i]->data.front());
-								gr[j]->linked = true;
 							}
 							gr[i]->data.pop_front();
+							break;
+						}
+						else
+						{
+							gr[j]->data.push_back(gr[i]->data.front());
+							gr[j]->linked = true;
+						}
+						gr[i]->data.pop_front();
 					}
 				}
 				break;
@@ -216,9 +201,9 @@ void MST::BreadthFirstSerch()
 	{
 		if (gr[i]->data.empty()) continue;
 		for (auto num : gr[i]->data)
-			{
+		{
 			cout << "from = " << num.from << ", to = " << num.to << ", pio = " << num.pio << endl;
-			}
+		}
 	}
 }
 
@@ -259,7 +244,7 @@ MST::MST()
 	count = 0;
 	vertexs = nullptr;
 	graph = nullptr;
-	
+
 	for (int i = 0; i < Max; i++)
 	{
 		dis.insert({ i,0 });
